@@ -11,8 +11,9 @@ async function bootstrap() {
 	}));
 
 	app.enableCors();
+	
+	// Swagger
 	{
-		// Swagger
 		const config = new DocumentBuilder()
 			.setTitle('Mbs Api')
 			.setDescription('Mbs Api documentation')
@@ -21,7 +22,6 @@ async function bootstrap() {
 		const document = SwaggerModule.createDocument(app, config);
 		SwaggerModule.setup('api', app, document);
 	}
-
 
 	await app.listen(3000);
 }

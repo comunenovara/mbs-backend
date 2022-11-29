@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { AssetDto } from "../dto/asset.dto";
 import { PrismaService } from "../repository/prisma.service";
 
@@ -9,18 +9,12 @@ export class AssetBusinessService {
     ) {}
 
     async addAsset(assetDto: AssetDto) {
-        if(assetDto.id !== undefined) {
-            throw new BadRequestException("not insert id in creation");
-        }
         return await this.prisma.asset.create({
             data: assetDto,
         });
     }
 
     async editAsset(assetDto: AssetDto) {
-        if(assetDto.id === undefined) {
-            throw new BadRequestException("id is required in update");
-        }
         return await this.prisma.asset.update({
             where: {
                 id: assetDto.id,

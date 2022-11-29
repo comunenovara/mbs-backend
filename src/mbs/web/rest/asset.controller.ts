@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from "@nestjs/common";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
 import { AssetBusinessService } from "src/mbs/business/asset.business.service";
 import { AssetDto } from "src/mbs/dto/asset.dto";
@@ -16,22 +16,34 @@ export class AssetController {
     @ApiResponse({ status: 400, description: 'Bad request.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     createAsset(@Body() assetDto: AssetDto) {
+        if(assetDto.id !== undefined) {
+            throw new BadRequestException("not insert id in creation");
+        }
         return this.assetBusinessService.addAsset(assetDto);
     }
 
     @Put('assets')
+    @ApiResponse({ status: 201, description: 'The record has been successfully updated.'})
+    @ApiResponse({ status: 400, description: 'Bad request.'})
+    @ApiResponse({ status: 403, description: 'Forbidden.'})
     updateAsset(@Body() assetDto: AssetDto) {
-        // TODO - CREARE METODO DI UPDATE
+        if(assetDto.id === undefined) {
+            throw new BadRequestException("id is required in update");
+        }
         return this.assetBusinessService.editAsset(assetDto);
     }
 
     @Get('assets')
+    @ApiResponse({ status: 200, description: 'List of assets.'})
+    @ApiResponse({ status: 403, description: 'Forbidden.'})
     getAllAssets(): Promise<any> {
         // TODO - AGGIUNGERE FILTRI
         return this.assetBusinessService.getAssets();
     }
 
     @Get('assets/count')
+    @ApiResponse({ status: 200, description: 'Count of assets.'})
+    @ApiResponse({ status: 403, description: 'Forbidden.'})
     getAssetsCount(): Promise<any> {
         // TODO - AGGIUNGERE FILTRI
         return new Promise((resolve) => {
@@ -40,14 +52,18 @@ export class AssetController {
     }
 
     @Get('assets/:id')
-    getAsset(@Param('id') id: number): Promise<any> {
-        // SE NON TROVA VAI IN 404
-        return this.assetBusinessService.getAsset(+id);
+    @ApiResponse({ status: 200, description: 'Asset detail.'})
+    @ApiResponse({ status: 403, description: 'Forbidden.'})
+    async getAsset(@Param('id') id: number): Promise<AssetDto> {
+        let assetDto: AssetDto = await this.assetBusinessService.getAsset(+id);
+        if(assetDto === null) throw new NotFoundException();
+        return assetDto;
     }
 
     @Delete('assets/:id/delete')
+    @ApiResponse({ status: 200, description: 'Asset deleted.'})
+    @ApiResponse({ status: 403, description: 'Forbidden.'})
     deleteAsset(@Param('id') id: number) {
-        // TODO - CREARE METODO DI DELETE
         return this.assetBusinessService.deleteAsset(+id);
     }
 
