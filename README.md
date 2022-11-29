@@ -26,10 +26,10 @@ $ npm run start:prod
 Quando si aggiorna una entity nel file schema.prisma eseguire il seguente comando:
 
 ```bash
-npm prisma migrate dev
+npx prisma migrate dev
 ```
 
 for read db 
 ```bash
-npm prisma studio
+npx prisma studio
 ```
