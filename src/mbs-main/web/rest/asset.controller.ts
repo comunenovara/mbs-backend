@@ -1,7 +1,7 @@
 import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from "@nestjs/common";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
-import { AssetBusinessService } from "src/mbs/business/asset.business.service";
-import { AssetDto } from "src/mbs/dto/asset.dto";
+import { AssetBusinessService } from "../../business/asset.business.service";
+import { AssetDto } from "../../dto/asset.dto";
 
 @ApiTags('asset')
 @Controller('mbs')

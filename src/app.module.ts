@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { MbsModule } from './mbs/mbs.module';
+import { MbsModule } from './mbs-main/mbs.module';
 
 @Module({
 	imports: [
