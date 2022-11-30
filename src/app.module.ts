@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { MbsModule } from './mbs-main/mbs.module';
+import { MbsMainModule } from './mbs-main/mbs-main.module';
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({
 			isGlobal: true
 		}),
-		MbsModule,
+		MbsMainModule,
 	],
 })
 export class AppModule { }

@@ -29,6 +29,10 @@ Quando si aggiorna una entity nel file schema.prisma eseguire il seguente comand
 npx prisma migrate dev
 ```
 
+Dopo aver aggiornato le entity come al punto precedente o altro modo eseguire il comando:
+```bash
+npx prisma generate
+```
 for read db 
 ```bash
 npx prisma studio

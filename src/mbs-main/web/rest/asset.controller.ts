@@ -4,7 +4,7 @@ import { AssetBusinessService } from "../../business/asset.business.service";
 import { AssetDto } from "../../dto/asset.dto";
 
 @ApiTags('asset')
-@Controller('mbs')
+@Controller('mbs/main')
 export class AssetController {
     constructor(
         private assetBusinessService: AssetBusinessService,

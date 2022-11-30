@@ -8,11 +8,15 @@ export class AssetBusinessService {
         private prisma: PrismaService,
     ) {}
 
-    async addAsset(assetDto: AssetDto) {
-        return await this.prisma.asset.create({
-            data: assetDto,
-        });
-    }
+	async addAsset(assetDto: AssetDto) {
+		return await this.prisma.asset.create({
+			data: {
+				description: assetDto.description,
+				address: assetDto.address,
+				mq: assetDto.mq,
+			},
+		});
+	}
 
     async editAsset(assetDto: AssetDto) {
         return await this.prisma.asset.update({

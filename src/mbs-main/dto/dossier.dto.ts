@@ -1,7 +1,11 @@
 import { ApiProperty, ApiTags } from "@nestjs/swagger";
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { DossierTypeDto } from "./dossier-type.dto";
+import { AssetDto } from "./asset.dto";
+import { RelifDto } from "./relif.dto";
+import { OperationDto } from "./operation.dto";
 
-export class AssetDto {
+export class DossierDto {
 	
 	@ApiProperty({
 		type: Number,
@@ -20,21 +24,9 @@ export class AssetDto {
 	@IsString()
 	description?: string;
 
-    @ApiProperty({
-		type: String,
-		required: false
-	})
-	@IsNotEmpty()
-	@IsString()
-	address?: string;
-
-    @ApiProperty({
-		type: Number,
-		required: false
-	})
-	@IsNotEmpty()
-	@IsString()
-	mq?: number;
-
+	type?: DossierTypeDto;
+	asset?: AssetDto;
+	relif?: RelifDto;
+	operation?: OperationDto;
 
 }
