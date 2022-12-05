@@ -28,8 +28,8 @@ model Dossier {
 	createdAt   	DateTime @default(now())
 	updatedAt   	DateTime @updatedAt()
 
-	dossierTypeId		Int
-	dossierType		DossierType	@relation(fields: [dossierTypeId], references: [id])
+	typeId		Int
+	type		DossierType	@relation(fields: [typeId], references: [id])
 
 	assetId		Int?
 	asset		Asset?	@relation(fields: [assetId], references: [id])
@@ -62,8 +62,8 @@ model Operation {
 	createdAt   	DateTime @default(now())
 	updatedAt   	DateTime @updatedAt()
 
-	operationTypeId		Int
-	operationType		OperationType	@relation(fields: [operationTypeId], references: [id])
+	typeId		Int
+	type		OperationType	@relation(fields: [typeId], references: [id])
 
 	assetId		Int
 	asset		Asset	@relation(fields: [assetId], references: [id])
@@ -97,9 +97,8 @@ model Relif {
 	asset		Asset	@relation(fields: [assetId], references: [id])
 
 	description		String?
-	startDate		DateTime @default(now())
+	startDate		DateTime
 	endDate		DateTime?
 
 	dossiers	Dossier[]
 }
-

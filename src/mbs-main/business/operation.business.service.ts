@@ -11,7 +11,7 @@ export class OperationBusinessService {
 	async addOperation(operationDto: OperationDto) {
 		return await this.prisma.operation.create({
 			data: {
-				operationTypeId: operationDto.typeId,
+				typeId: operationDto.typeId,
 				assetId: operationDto.assetId,
 				description: operationDto.description,
 				value: operationDto.value,
@@ -27,7 +27,7 @@ export class OperationBusinessService {
                 id: operationDto.id,
             },
 			data: {
-				operationTypeId: operationDto.typeId,
+				typeId: operationDto.typeId,
 				assetId: operationDto.assetId,
 				description: operationDto.description,
 				value: operationDto.value,
