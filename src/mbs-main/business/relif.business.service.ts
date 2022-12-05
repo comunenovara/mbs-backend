@@ -33,15 +33,22 @@ export class RelifBusinessService {
         });
     }
 
-    getRelifs() {
-        return this.prisma.relif.findMany()
+    async getRelifs(): Promise<RelifDto[]> {
+        return await this.prisma.relif.findMany({
+            include: {
+                asset: true,
+            },
+        })
     }
 
-    getRelif(id: number) {
-        return this.prisma.relif.findUnique({
+    async getRelif(id: number): Promise<RelifDto> {
+        return await this.prisma.relif.findUnique({
             where: {
                 id: id,
-            }
+            },
+            include: {
+                asset: true,
+            },
         })
     }
 

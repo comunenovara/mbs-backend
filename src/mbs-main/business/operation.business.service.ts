@@ -37,15 +37,24 @@ export class OperationBusinessService {
         });
     }
 
-    getOperations() {
-        return this.prisma.operation.findMany()
+    async getOperations(): Promise<OperationDto[]> {
+        return await this.prisma.operation.findMany({
+            include: {
+                type: true,
+                asset: true,
+            },
+        })
     }
 
-    getOperation(id: number) {
-        return this.prisma.operation.findUnique({
+    async getOperation(id: number): Promise<OperationDto> {
+        return await this.prisma.operation.findUnique({
             where: {
                 id: id,
-            }
+            },
+            include: {
+                type: true,
+                asset: true,
+            },
         })
     }
 

@@ -27,15 +27,16 @@ export class OperationTypeBusinessService {
         });
     }
 
-    getOperationTypes() {
-        return this.prisma.operationType.findMany()
+    async getOperationTypes(): Promise<OperationTypeDto[]> {
+        return await this.prisma.operationType.findMany({
+        })
     }
 
-    getOperationType(id: number) {
-        return this.prisma.operationType.findUnique({
+    async getOperationType(id: number): Promise<OperationTypeDto> {
+        return await this.prisma.operationType.findUnique({
             where: {
                 id: id,
-            }
+            },
         })
     }
 

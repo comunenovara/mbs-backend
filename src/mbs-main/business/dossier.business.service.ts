@@ -35,15 +35,28 @@ export class DossierBusinessService {
         });
     }
 
-    getDossiers() {
-        return this.prisma.dossier.findMany()
+    async getDossiers(): Promise<DossierDto[]> {
+        return await this.prisma.dossier.findMany({
+            include: {
+                type: true,
+                asset: true,
+                relif: true,
+                operation: true,
+            },
+        })
     }
 
-    getDossier(id: number) {
-        return this.prisma.dossier.findUnique({
+    async getDossier(id: number): Promise<DossierDto> {
+        return await this.prisma.dossier.findUnique({
             where: {
                 id: id,
-            }
+            },
+            include: {
+                type: true,
+                asset: true,
+                relif: true,
+                operation: true,
+            },
         })
     }
 

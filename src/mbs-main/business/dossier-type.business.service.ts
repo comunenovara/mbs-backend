@@ -29,15 +29,16 @@ export class DossierTypeBusinessService {
         });
     }
 
-    getDossierTypes() {
-        return this.prisma.dossierType.findMany()
+    async getDossierTypes(): Promise<DossierTypeDto[]> {
+        return await this.prisma.dossierType.findMany({
+        })
     }
 
-    getDossierType(id: number) {
-        return this.prisma.dossierType.findUnique({
+    async getDossierType(id: number): Promise<DossierTypeDto> {
+        return await this.prisma.dossierType.findUnique({
             where: {
                 id: id,
-            }
+            },
         })
     }
 

@@ -31,15 +31,16 @@ export class AssetBusinessService {
         });
     }
 
-    getAssets() {
-        return this.prisma.asset.findMany()
+    async getAssets(): Promise<AssetDto[]> {
+        return await this.prisma.asset.findMany({
+        })
     }
 
-    getAsset(id: number) {
-        return this.prisma.asset.findUnique({
+    async getAsset(id: number): Promise<AssetDto> {
+        return await this.prisma.asset.findUnique({
             where: {
                 id: id,
-            }
+            },
         })
     }
 
