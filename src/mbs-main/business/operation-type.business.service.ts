@@ -21,7 +21,9 @@ export class OperationTypeBusinessService {
             where: {
                 id: operationTypeDto.id,
             },
-            data: operationTypeDto,
+			data: {
+				description: operationTypeDto.description,
+			},
         });
     }
 

@@ -11,6 +11,10 @@ export class DossierBusinessService {
 	async addDossier(dossierDto: DossierDto) {
 		return await this.prisma.dossier.create({
 			data: {
+				dossierTypeId: dossierDto.typeId,
+				assetId: dossierDto.assetId,
+				relifId: dossierDto.relifId,
+				operationId: dossierDto.operationId,
 				description: dossierDto.description,
 			},
 		});
@@ -21,7 +25,13 @@ export class DossierBusinessService {
             where: {
                 id: dossierDto.id,
             },
-            data: dossierDto,
+			data: {
+				dossierTypeId: dossierDto.typeId,
+				assetId: dossierDto.assetId,
+				relifId: dossierDto.relifId,
+				operationId: dossierDto.operationId,
+				description: dossierDto.description,
+			},
         });
     }
 

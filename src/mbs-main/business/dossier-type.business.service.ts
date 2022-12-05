@@ -22,7 +22,10 @@ export class DossierTypeBusinessService {
             where: {
                 id: dossierTypeDto.id,
             },
-            data: dossierTypeDto,
+			data: {
+				description: dossierTypeDto.description,
+				category: dossierTypeDto.category,
+			},
         });
     }
 

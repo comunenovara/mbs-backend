@@ -23,7 +23,11 @@ export class AssetBusinessService {
             where: {
                 id: assetDto.id,
             },
-            data: assetDto,
+			data: {
+				description: assetDto.description,
+				address: assetDto.address,
+				mq: assetDto.mq,
+			},
         });
     }
 

@@ -37,6 +37,8 @@ export class RelifDto {
 	@IsString()
 	endDate?: Date;
 
+
+	assetId?: number;
 	asset?: AssetDto;
 
 }

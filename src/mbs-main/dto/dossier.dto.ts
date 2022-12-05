@@ -24,9 +24,17 @@ export class DossierDto {
 	@IsString()
 	description?: string;
 
+
+	typeId?: number;
 	type?: DossierTypeDto;
+
+	assetId?: number;
 	asset?: AssetDto;
+
+	relifId?: number;
 	relif?: RelifDto;
+
+	operationId?: number;
 	operation?: OperationDto;
 
 }

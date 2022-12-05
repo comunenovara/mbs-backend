@@ -2,49 +2,95 @@ model Asset {
 	id          	Int      @id @default(autoincrement())
 	createdAt   	DateTime @default(now())
 	updatedAt   	DateTime @updatedAt()
+
 	description		String
-	address		String
-	mq		Float
+	address		String?
+	mq		Float?
+
+	dossiers	Dossier[]
+	operations	Operation[]
+	relifs	Relif[]
 }
 
 model Dossier {
+	@@map("dossier")
+
 	id          	Int      @id @default(autoincrement())
 	createdAt   	DateTime @default(now())
 	updatedAt   	DateTime @updatedAt()
+
+	dossierTypeId		Int
+	dossierType		DossierType	@relation(fields: [dossierTypeId], references: [id])
+
+	assetId		Int?
+	asset		Asset?	@relation(fields: [assetId], references: [id])
+
+	relifId		Int?
+	relif		Relif?	@relation(fields: [relifId], references: [id])
+
+	operationId		Int?
+	operation		Operation?	@relation(fields: [operationId], references: [id])
+
 	description		String
+
 }
 
 model DossierType {
 	id          	Int      @id @default(autoincrement())
 	createdAt   	DateTime @default(now())
 	updatedAt   	DateTime @updatedAt()
+
 	description		String
 	category		String
+
+	dossiers	Dossier[]
 }
 
 model Operation {
+	@@map("operation")
+
 	id          	Int      @id @default(autoincrement())
 	createdAt   	DateTime @default(now())
 	updatedAt   	DateTime @updatedAt()
+
+	operationTypeId		Int
+	operationType		OperationType	@relation(fields: [operationTypeId], references: [id])
+
+	assetId		Int
+	asset		Asset	@relation(fields: [assetId], references: [id])
+
 	description		String
-	value		Decimal
-	startDate		DateTime
-	endDate		DateTime
+	value		Decimal?
+	startDate		DateTime?
+	endDate		DateTime?
+
+	dossiers	Dossier[]
 }
 
 model OperationType {
 	id          	Int      @id @default(autoincrement())
 	createdAt   	DateTime @default(now())
 	updatedAt   	DateTime @updatedAt()
+
 	description		String
+
+	operations	Operation[]
 }
 
 model Relif {
+	@@map("relif")
+
 	id          	Int      @id @default(autoincrement())
 	createdAt   	DateTime @default(now())
 	updatedAt   	DateTime @updatedAt()
-	description		String
+
+	assetId		Int
+	asset		Asset	@relation(fields: [assetId], references: [id])
+
+	description		String?
 	startDate		DateTime
-	endDate		DateTime
+	endDate		DateTime?
+
+	dossiers	Dossier[]
 }
 
