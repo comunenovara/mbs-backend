@@ -59,8 +59,9 @@ CREATE TABLE "Relif" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "date" TIMESTAMP(3) NOT NULL,
-    "reason" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "startDate" TIMESTAMP(3) NOT NULL,
+    "endDate" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Relif_pkey" PRIMARY KEY ("id")
 );

@@ -11,6 +11,7 @@ export class OperationBusinessService {
 	async addOperation(operationDto: OperationDto) {
 		return await this.prisma.operation.create({
 			data: {
+                assetId: operationDto.assetId,
 				description: operationDto.description,
 				value: operationDto.value,
 				startDate: operationDto.startDate,
@@ -24,7 +25,13 @@ export class OperationBusinessService {
             where: {
                 id: operationDto.id,
             },
-            data: operationDto,
+            data: {
+                assetId: operationDto.assetId,
+				description: operationDto.description,
+				value: operationDto.value,
+				startDate: operationDto.startDate,
+				endDate: operationDto.endDate,
+            },
         });
     }
 

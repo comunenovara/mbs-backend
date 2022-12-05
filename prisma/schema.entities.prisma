@@ -43,7 +43,8 @@ model Relif {
 	id          	Int      @id @default(autoincrement())
 	createdAt   	DateTime @default(now())
 	updatedAt   	DateTime @updatedAt()
-	date		DateTime
-	reason		String
+	description		String
+	startDate		DateTime
+	endDate		DateTime
 }
 

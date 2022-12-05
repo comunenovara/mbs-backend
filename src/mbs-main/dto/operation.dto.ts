@@ -47,7 +47,10 @@ export class OperationDto {
 	@IsString()
 	endDate?: Date;
 
+	//typeId?: Number;
 	type?: OperationTypeDto;
+
+	assetId?: number;
 	asset?: AssetDto;
 
 }

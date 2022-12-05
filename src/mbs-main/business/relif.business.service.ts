@@ -11,8 +11,9 @@ export class RelifBusinessService {
 	async addRelif(relifDto: RelifDto) {
 		return await this.prisma.relif.create({
 			data: {
-				date: relifDto.date,
-				reason: relifDto.reason,
+				description: relifDto.description,
+				startDate: relifDto.startDate,
+				endDate: relifDto.endDate,
 			},
 		});
 	}
