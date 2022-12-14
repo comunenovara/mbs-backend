@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Query } from "@nestjs/common";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
 import { AssetBusinessService } from "../../business/asset.business.service";
 import { AssetDto } from "../../dto/asset.dto";
@@ -36,16 +36,14 @@ export class AssetController {
     @Get('assets')
     @ApiResponse({ status: 200, description: 'List of assets.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
-    getAllAssets(): Promise<any> {
-        // TODO - AGGIUNGERE FILTRI
-        return this.assetBusinessService.getAssets();
+    getAllAssets(@Query() queryParams): Promise<any> {
+        return this.assetBusinessService.getAssets(queryParams);
     }
 
     @Get('assets/count')
     @ApiResponse({ status: 200, description: 'Count of assets.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
-    getAssetsCount(): Promise<any> {
-        // TODO - AGGIUNGERE FILTRI
+    getAssetsCount(@Query() queryParams): Promise<any> {
         return new Promise((resolve) => {
             resolve(2);
         });

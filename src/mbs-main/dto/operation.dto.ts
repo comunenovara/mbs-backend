@@ -29,29 +29,26 @@ export class OperationDto {
 		required: false
 	})
 	@IsNotEmpty()
-	@IsString()
+	@IsNumber()
 	value?: Decimal;
 
     @ApiProperty({
 		type: Date,
 		required: false
 	})
-	@IsNotEmpty()
-	@IsString()
 	startDate?: Date;
 
     @ApiProperty({
 		type: Date,
 		required: false
 	})
-	@IsNotEmpty()
-	@IsString()
 	endDate?: Date;
 
-
+	@IsNumber()
 	typeId?: number;
 	type?: OperationTypeDto;
 
+	@IsNumber()
 	assetId?: number;
 	asset?: AssetDto;
 

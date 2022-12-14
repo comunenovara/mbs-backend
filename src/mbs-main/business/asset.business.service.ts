@@ -31,8 +31,10 @@ export class AssetBusinessService {
         });
     }
 
-    async getAssets(): Promise<AssetDto[]> {
+    async getAssets(queryParams: any): Promise<AssetDto[]> {
         return await this.prisma.asset.findMany({
+            skip: (queryParams.size*queryParams.page),
+            take: +queryParams.size,
         })
     }
 
