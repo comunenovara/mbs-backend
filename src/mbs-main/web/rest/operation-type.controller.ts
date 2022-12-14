@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Query } from "@nestjs/common";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
 import { OperationTypeBusinessService } from "../../business/operation-type.business.service";
 import { OperationTypeDto } from "../../dto/operation-type.dto";
@@ -36,16 +36,15 @@ export class OperationTypeController {
     @Get('operationTypes')
     @ApiResponse({ status: 200, description: 'List of operationTypes.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
-    getAllOperationTypes(): Promise<any> {
-        // TODO - AGGIUNGERE FILTRI
-        return this.operationTypeBusinessService.getOperationTypes();
+    getAllOperationTypes(@Query() queryParams): Promise<any> {
+        return this.operationTypeBusinessService.getOperationTypes(queryParams);
     }
 
     @Get('operationTypes/count')
     @ApiResponse({ status: 200, description: 'Count of operationTypes.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
-    getOperationTypesCount(): Promise<any> {
-        // TODO - AGGIUNGERE FILTRI
+    getOperationTypesCount(@Query() queryParams): Promise<any> {
+        // implementare query per contare
         return new Promise((resolve) => {
             resolve(2);
         });

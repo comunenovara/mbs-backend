@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { OperationDto } from "../dto/operation.dto";
 import { PrismaService } from "../repository/prisma.service";
+import { QueryParamsTools } from "../tools/query-params.class";
 
 @Injectable({})
 export class OperationBusinessService {
@@ -37,13 +38,28 @@ export class OperationBusinessService {
         });
     }
 
-    async getOperations(): Promise<OperationDto[]> {
-        return await this.prisma.operation.findMany({
-            include: {
+    async getOperations(queryParams: any): Promise<OperationDto[]> {
+        let prismaRequestArgs: any = {};
+		// Pagination
+		if(queryParams.size !== undefined && queryParams.page !== undefined) {
+			prismaRequestArgs = { ...QueryParamsTools.getPrismaPaginationObject(queryParams) };
+		}
+		// Filter
+		{
+
+		}
+		// Join
+		{
+            prismaRequestArgs['include'] = {
                 type: true,
                 asset: true,
-            },
-        })
+            };
+        }
+        // Order
+		if(queryParams.orderBy !== undefined) {
+			prismaRequestArgs['orderBy'] = QueryParamsTools.getPrismaOrderByArray(queryParams);
+		}
+        return await this.prisma.operation.findMany(prismaRequestArgs);
     }
 
     async getOperation(id: number): Promise<OperationDto> {

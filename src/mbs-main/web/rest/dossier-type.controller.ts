@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Query } from "@nestjs/common";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
 import { DossierTypeBusinessService } from "../../business/dossier-type.business.service";
 import { DossierTypeDto } from "../../dto/dossier-type.dto";
@@ -36,16 +36,15 @@ export class DossierTypeController {
     @Get('dossierTypes')
     @ApiResponse({ status: 200, description: 'List of dossierTypes.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
-    getAllDossierTypes(): Promise<any> {
-        // TODO - AGGIUNGERE FILTRI
-        return this.dossierTypeBusinessService.getDossierTypes();
+    getAllDossierTypes(@Query() queryParams): Promise<any> {
+        return this.dossierTypeBusinessService.getDossierTypes(queryParams);
     }
 
     @Get('dossierTypes/count')
     @ApiResponse({ status: 200, description: 'Count of dossierTypes.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
-    getDossierTypesCount(): Promise<any> {
-        // TODO - AGGIUNGERE FILTRI
+    getDossierTypesCount(@Query() queryParams): Promise<any> {
+        // implementare query per contare
         return new Promise((resolve) => {
             resolve(2);
         });

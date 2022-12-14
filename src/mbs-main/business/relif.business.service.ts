@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { RelifDto } from "../dto/relif.dto";
 import { PrismaService } from "../repository/prisma.service";
+import { QueryParamsTools } from "../tools/query-params.class";
 
 @Injectable({})
 export class RelifBusinessService {
@@ -33,12 +34,27 @@ export class RelifBusinessService {
         });
     }
 
-    async getRelifs(): Promise<RelifDto[]> {
-        return await this.prisma.relif.findMany({
-            include: {
+    async getRelifs(queryParams: any): Promise<RelifDto[]> {
+        let prismaRequestArgs: any = {};
+		// Pagination
+		if(queryParams.size !== undefined && queryParams.page !== undefined) {
+			prismaRequestArgs = { ...QueryParamsTools.getPrismaPaginationObject(queryParams) };
+		}
+		// Filter
+		{
+
+		}
+		// Join
+		{
+            prismaRequestArgs['include'] = {
                 asset: true,
-            },
-        })
+            };
+        }
+        // Order
+		if(queryParams.orderBy !== undefined) {
+			prismaRequestArgs['orderBy'] = QueryParamsTools.getPrismaOrderByArray(queryParams);
+		}
+        return await this.prisma.relif.findMany(prismaRequestArgs);
     }
 
     async getRelif(id: number): Promise<RelifDto> {

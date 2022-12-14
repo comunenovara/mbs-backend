@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Query } from "@nestjs/common";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
 import { DossierBusinessService } from "../../business/dossier.business.service";
 import { DossierDto } from "../../dto/dossier.dto";
@@ -36,16 +36,15 @@ export class DossierController {
     @Get('dossiers')
     @ApiResponse({ status: 200, description: 'List of dossiers.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
-    getAllDossiers(): Promise<any> {
-        // TODO - AGGIUNGERE FILTRI
-        return this.dossierBusinessService.getDossiers();
+    getAllDossiers(@Query() queryParams): Promise<any> {
+        return this.dossierBusinessService.getDossiers(queryParams);
     }
 
     @Get('dossiers/count')
     @ApiResponse({ status: 200, description: 'Count of dossiers.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
-    getDossiersCount(): Promise<any> {
-        // TODO - AGGIUNGERE FILTRI
+    getDossiersCount(@Query() queryParams): Promise<any> {
+        // implementare query per contare
         return new Promise((resolve) => {
             resolve(2);
         });

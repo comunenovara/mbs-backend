@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Query } from "@nestjs/common";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
 import { RelifBusinessService } from "../../business/relif.business.service";
 import { RelifDto } from "../../dto/relif.dto";
@@ -36,16 +36,15 @@ export class RelifController {
     @Get('relifs')
     @ApiResponse({ status: 200, description: 'List of relifs.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
-    getAllRelifs(): Promise<any> {
-        // TODO - AGGIUNGERE FILTRI
-        return this.relifBusinessService.getRelifs();
+    getAllRelifs(@Query() queryParams): Promise<any> {
+        return this.relifBusinessService.getRelifs(queryParams);
     }
 
     @Get('relifs/count')
     @ApiResponse({ status: 200, description: 'Count of relifs.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
-    getRelifsCount(): Promise<any> {
-        // TODO - AGGIUNGERE FILTRI
+    getRelifsCount(@Query() queryParams): Promise<any> {
+        // implementare query per contare
         return new Promise((resolve) => {
             resolve(2);
         });

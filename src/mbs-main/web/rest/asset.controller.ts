@@ -44,6 +44,7 @@ export class AssetController {
     @ApiResponse({ status: 200, description: 'Count of assets.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     getAssetsCount(@Query() queryParams): Promise<any> {
+        // implementare query per contare
         return new Promise((resolve) => {
             resolve(2);
         });

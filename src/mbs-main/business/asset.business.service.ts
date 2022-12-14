@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { AssetDto } from "../dto/asset.dto";
 import { PrismaService } from "../repository/prisma.service";
+import { QueryParamsTools } from "../tools/query-params.class";
 
 @Injectable({})
 export class AssetBusinessService {
@@ -32,10 +33,23 @@ export class AssetBusinessService {
     }
 
     async getAssets(queryParams: any): Promise<AssetDto[]> {
-        return await this.prisma.asset.findMany({
-            skip: (queryParams.size*queryParams.page),
-            take: +queryParams.size,
-        })
+        let prismaRequestArgs: any = {};
+		// Pagination
+		if(queryParams.size !== undefined && queryParams.page !== undefined) {
+			prismaRequestArgs = { ...QueryParamsTools.getPrismaPaginationObject(queryParams) };
+		}
+		// Filter
+		{
+
+		}
+		// Join
+		{
+        }
+        // Order
+		if(queryParams.orderBy !== undefined) {
+			prismaRequestArgs['orderBy'] = QueryParamsTools.getPrismaOrderByArray(queryParams);
+		}
+        return await this.prisma.asset.findMany(prismaRequestArgs);
     }
 
     async getAsset(id: number): Promise<AssetDto> {

@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { DossierDto } from "../dto/dossier.dto";
 import { PrismaService } from "../repository/prisma.service";
+import { QueryParamsTools } from "../tools/query-params.class";
 
 @Injectable({})
 export class DossierBusinessService {
@@ -35,15 +36,30 @@ export class DossierBusinessService {
         });
     }
 
-    async getDossiers(): Promise<DossierDto[]> {
-        return await this.prisma.dossier.findMany({
-            include: {
+    async getDossiers(queryParams: any): Promise<DossierDto[]> {
+        let prismaRequestArgs: any = {};
+		// Pagination
+		if(queryParams.size !== undefined && queryParams.page !== undefined) {
+			prismaRequestArgs = { ...QueryParamsTools.getPrismaPaginationObject(queryParams) };
+		}
+		// Filter
+		{
+
+		}
+		// Join
+		{
+            prismaRequestArgs['include'] = {
                 type: true,
                 asset: true,
                 relif: true,
                 operation: true,
-            },
-        })
+            };
+        }
+        // Order
+		if(queryParams.orderBy !== undefined) {
+			prismaRequestArgs['orderBy'] = QueryParamsTools.getPrismaOrderByArray(queryParams);
+		}
+        return await this.prisma.dossier.findMany(prismaRequestArgs);
     }
 
     async getDossier(id: number): Promise<DossierDto> {
