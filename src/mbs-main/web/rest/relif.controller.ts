@@ -43,11 +43,8 @@ export class RelifController {
     @Get('relifs/count')
     @ApiResponse({ status: 200, description: 'Count of relifs.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
-    getRelifsCount(@Query() queryParams): Promise<any> {
-        // implementare query per contare
-        return new Promise((resolve) => {
-            resolve(2);
-        });
+    getRelifsCount(@Query() queryParams): Promise<number> {
+        return this.relifBusinessService.countRelifs(queryParams);
     }
 
     @Get('relifs/:id')

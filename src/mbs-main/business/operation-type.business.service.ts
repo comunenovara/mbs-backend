@@ -5,9 +5,9 @@ import { QueryParamsTools } from "../tools/query-params.class";
 
 @Injectable({})
 export class OperationTypeBusinessService {
-    constructor(
-        private prisma: PrismaService,
-    ) {}
+	constructor(
+		private prisma: PrismaService,
+	) {}
 
 	async addOperationType(operationTypeDto: OperationTypeDto) {
 		return await this.prisma.operationType.create({
@@ -17,19 +17,20 @@ export class OperationTypeBusinessService {
 		});
 	}
 
-    async editOperationType(operationTypeDto: OperationTypeDto) {
-        return await this.prisma.operationType.update({
-            where: {
-                id: operationTypeDto.id,
-            },
+	async editOperationType(operationTypeDto: OperationTypeDto) {
+		return await this.prisma.operationType.update({
+			where: {
+				id: operationTypeDto.id,
+			},
 			data: {
 				description: operationTypeDto.description,
 			},
-        });
-    }
+		});
+	}
 
-    async getOperationTypes(queryParams: any): Promise<OperationTypeDto[]> {
-        let prismaRequestArgs: any = {};
+	// Search
+	async getOperationTypes(queryParams: any): Promise<OperationTypeDto[]> {
+		let prismaRequestArgs: any = {};
 		// Pagination
 		if(queryParams.size !== undefined && queryParams.page !== undefined) {
 			prismaRequestArgs = { ...QueryParamsTools.getPrismaPaginationObject(queryParams) };
@@ -40,27 +41,37 @@ export class OperationTypeBusinessService {
 		}
 		// Join
 		{
-        }
-        // Order
+		}
+		// Order
 		if(queryParams.orderBy !== undefined) {
 			prismaRequestArgs['orderBy'] = QueryParamsTools.getPrismaOrderByArray(queryParams);
 		}
-        return await this.prisma.operationType.findMany(prismaRequestArgs);
-    }
+		return await this.prisma.operationType.findMany(prismaRequestArgs);
+	}
 
-    async getOperationType(id: number): Promise<OperationTypeDto> {
-        return await this.prisma.operationType.findUnique({
-            where: {
-                id: id,
-            },
-        })
-    }
+	// Count
+	async countOperationTypes(queryParams: any): Promise<number> {
+		let prismaRequestArgs: any = {};
+		// Filter
+		{
 
-    async deleteOperationType(id: number) {
-        return await this.prisma.operationType.delete({
-            where: {
-                id: id,
-            }
-        });
-    }
+		}
+		return await this.prisma.operationType.count(prismaRequestArgs);
+	}
+
+	async getOperationType(id: number): Promise<OperationTypeDto> {
+		return await this.prisma.operationType.findUnique({
+			where: {
+				id: id,
+			},
+		})
+	}
+
+	async deleteOperationType(id: number) {
+		return await this.prisma.operationType.delete({
+			where: {
+				id: id,
+			}
+		});
+	}
 }

@@ -43,11 +43,8 @@ export class DossierController {
     @Get('dossiers/count')
     @ApiResponse({ status: 200, description: 'Count of dossiers.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
-    getDossiersCount(@Query() queryParams): Promise<any> {
-        // implementare query per contare
-        return new Promise((resolve) => {
-            resolve(2);
-        });
+    getDossiersCount(@Query() queryParams): Promise<number> {
+        return this.dossierBusinessService.countDossiers(queryParams);
     }
 
     @Get('dossiers/:id')

@@ -5,9 +5,9 @@ import { QueryParamsTools } from "../tools/query-params.class";
 
 @Injectable({})
 export class OperationBusinessService {
-    constructor(
-        private prisma: PrismaService,
-    ) {}
+	constructor(
+		private prisma: PrismaService,
+	) {}
 
 	async addOperation(operationDto: OperationDto) {
 		return await this.prisma.operation.create({
@@ -22,11 +22,11 @@ export class OperationBusinessService {
 		});
 	}
 
-    async editOperation(operationDto: OperationDto) {
-        return await this.prisma.operation.update({
-            where: {
-                id: operationDto.id,
-            },
+	async editOperation(operationDto: OperationDto) {
+		return await this.prisma.operation.update({
+			where: {
+				id: operationDto.id,
+			},
 			data: {
 				typeId: operationDto.typeId,
 				assetId: operationDto.assetId,
@@ -35,11 +35,12 @@ export class OperationBusinessService {
 				startDate: operationDto.startDate,
 				endDate: operationDto.endDate,
 			},
-        });
-    }
+		});
+	}
 
-    async getOperations(queryParams: any): Promise<OperationDto[]> {
-        let prismaRequestArgs: any = {};
+	// Search
+	async getOperations(queryParams: any): Promise<OperationDto[]> {
+		let prismaRequestArgs: any = {};
 		// Pagination
 		if(queryParams.size !== undefined && queryParams.page !== undefined) {
 			prismaRequestArgs = { ...QueryParamsTools.getPrismaPaginationObject(queryParams) };
@@ -50,35 +51,45 @@ export class OperationBusinessService {
 		}
 		// Join
 		{
-            prismaRequestArgs['include'] = {
-                type: true,
-                asset: true,
-            };
-        }
-        // Order
+			prismaRequestArgs['include'] = {
+				type: true,
+				asset: true,
+			};
+		}
+		// Order
 		if(queryParams.orderBy !== undefined) {
 			prismaRequestArgs['orderBy'] = QueryParamsTools.getPrismaOrderByArray(queryParams);
 		}
-        return await this.prisma.operation.findMany(prismaRequestArgs);
-    }
+		return await this.prisma.operation.findMany(prismaRequestArgs);
+	}
 
-    async getOperation(id: number): Promise<OperationDto> {
-        return await this.prisma.operation.findUnique({
-            where: {
-                id: id,
-            },
-            include: {
-                type: true,
-                asset: true,
-            },
-        })
-    }
+	// Count
+	async countOperations(queryParams: any): Promise<number> {
+		let prismaRequestArgs: any = {};
+		// Filter
+		{
 
-    async deleteOperation(id: number) {
-        return await this.prisma.operation.delete({
-            where: {
-                id: id,
-            }
-        });
-    }
+		}
+		return await this.prisma.operation.count(prismaRequestArgs);
+	}
+
+	async getOperation(id: number): Promise<OperationDto> {
+		return await this.prisma.operation.findUnique({
+			where: {
+				id: id,
+			},
+			include: {
+				type: true,
+				asset: true,
+			},
+		})
+	}
+
+	async deleteOperation(id: number) {
+		return await this.prisma.operation.delete({
+			where: {
+				id: id,
+			}
+		});
+	}
 }

@@ -43,11 +43,8 @@ export class OperationTypeController {
     @Get('operationTypes/count')
     @ApiResponse({ status: 200, description: 'Count of operationTypes.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
-    getOperationTypesCount(@Query() queryParams): Promise<any> {
-        // implementare query per contare
-        return new Promise((resolve) => {
-            resolve(2);
-        });
+    getOperationTypesCount(@Query() queryParams): Promise<number> {
+        return this.operationTypeBusinessService.countOperationTypes(queryParams);
     }
 
     @Get('operationTypes/:id')
