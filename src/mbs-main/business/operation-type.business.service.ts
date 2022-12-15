@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { OperationTypeDto } from "../dto/operation-type.dto";
-import { OperationTypeEntityService } from "../entity/operationType.entity.service";
+import { OperationTypeEntityService } from "../entity/operation-type.entity.service";
 
 @Injectable({})
 export class OperationTypeBusinessService {

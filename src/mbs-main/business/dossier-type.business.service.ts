@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { DossierTypeDto } from "../dto/dossier-type.dto";
-import { DossierTypeEntityService } from "../entity/dossierType.entity.service";
+import { DossierTypeEntityService } from "../entity/dossier-type.entity.service";
 
 @Injectable({})
 export class DossierTypeBusinessService {
