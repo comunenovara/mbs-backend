@@ -37,14 +37,16 @@ export class AssetController {
     @ApiResponse({ status: 200, description: 'List of assets.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     getAllAssets(@Query() queryParams): Promise<any> {
-        return this.assetBusinessService.searchAssets(queryParams);
+        let filters: any = queryParams;
+        return this.assetBusinessService.searchAssets(filters);
     }
 
     @Get('assets/count')
     @ApiResponse({ status: 200, description: 'Count of assets.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     getAssetsCount(@Query() queryParams): Promise<number> {
-        return this.assetBusinessService.countAssets(queryParams);
+        let filters: any = queryParams;
+        return this.assetBusinessService.countAssets(filters);
     }
 
     @Get('assets/:id')

@@ -16,13 +16,12 @@ export class AssetBusinessService {
 		return this.assetEntityService.updateAsset(assetDto);
 	}
 
-	async searchAssets(filter: any): Promise<AssetDto[]> {
-		return this.assetEntityService.getAssets(filter);
+	async searchAssets(filters: any): Promise<AssetDto[]> {
+		return this.assetEntityService.getAssets(filters);
 	}
 
-	// Count
-	async countAssets(filter: any): Promise<number> {
-		return this.assetEntityService.countAssets(filter);
+	async countAssets(filters: any): Promise<number> {
+		return this.assetEntityService.countAssets(filters);
 	}
 
 	async getAsset(id: number): Promise<AssetDto> {

@@ -37,14 +37,16 @@ export class DossierController {
     @ApiResponse({ status: 200, description: 'List of dossiers.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     getAllDossiers(@Query() queryParams): Promise<any> {
-        return this.dossierBusinessService.searchDossiers(queryParams);
+        let filters: any = queryParams;
+        return this.dossierBusinessService.searchDossiers(filters);
     }
 
     @Get('dossiers/count')
     @ApiResponse({ status: 200, description: 'Count of dossiers.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     getDossiersCount(@Query() queryParams): Promise<number> {
-        return this.dossierBusinessService.countDossiers(queryParams);
+        let filters: any = queryParams;
+        return this.dossierBusinessService.countDossiers(filters);
     }
 
     @Get('dossiers/:id')

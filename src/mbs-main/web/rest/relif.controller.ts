@@ -37,14 +37,16 @@ export class RelifController {
     @ApiResponse({ status: 200, description: 'List of relifs.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     getAllRelifs(@Query() queryParams): Promise<any> {
-        return this.relifBusinessService.searchRelifs(queryParams);
+        let filters: any = queryParams;
+        return this.relifBusinessService.searchRelifs(filters);
     }
 
     @Get('relifs/count')
     @ApiResponse({ status: 200, description: 'Count of relifs.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     getRelifsCount(@Query() queryParams): Promise<number> {
-        return this.relifBusinessService.countRelifs(queryParams);
+        let filters: any = queryParams;
+        return this.relifBusinessService.countRelifs(filters);
     }
 
     @Get('relifs/:id')

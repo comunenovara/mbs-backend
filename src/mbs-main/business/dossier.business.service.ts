@@ -16,13 +16,12 @@ export class DossierBusinessService {
 		return this.dossierEntityService.updateDossier(dossierDto);
 	}
 
-	async searchDossiers(filter: any): Promise<DossierDto[]> {
-		return this.dossierEntityService.getDossiers(filter);
+	async searchDossiers(filters: any): Promise<DossierDto[]> {
+		return this.dossierEntityService.getDossiers(filters);
 	}
 
-	// Count
-	async countDossiers(filter: any): Promise<number> {
-		return this.dossierEntityService.countDossiers(filter);
+	async countDossiers(filters: any): Promise<number> {
+		return this.dossierEntityService.countDossiers(filters);
 	}
 
 	async getDossier(id: number): Promise<DossierDto> {

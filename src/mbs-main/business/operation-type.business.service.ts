@@ -16,13 +16,12 @@ export class OperationTypeBusinessService {
 		return this.operationTypeEntityService.updateOperationType(operationTypeDto);
 	}
 
-	async searchOperationTypes(filter: any): Promise<OperationTypeDto[]> {
-		return this.operationTypeEntityService.getOperationTypes(filter);
+	async searchOperationTypes(filters: any): Promise<OperationTypeDto[]> {
+		return this.operationTypeEntityService.getOperationTypes(filters);
 	}
 
-	// Count
-	async countOperationTypes(filter: any): Promise<number> {
-		return this.operationTypeEntityService.countOperationTypes(filter);
+	async countOperationTypes(filters: any): Promise<number> {
+		return this.operationTypeEntityService.countOperationTypes(filters);
 	}
 
 	async getOperationType(id: number): Promise<OperationTypeDto> {

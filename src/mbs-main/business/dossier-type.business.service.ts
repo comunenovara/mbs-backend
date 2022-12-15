@@ -16,13 +16,12 @@ export class DossierTypeBusinessService {
 		return this.dossierTypeEntityService.updateDossierType(dossierTypeDto);
 	}
 
-	async searchDossierTypes(filter: any): Promise<DossierTypeDto[]> {
-		return this.dossierTypeEntityService.getDossierTypes(filter);
+	async searchDossierTypes(filters: any): Promise<DossierTypeDto[]> {
+		return this.dossierTypeEntityService.getDossierTypes(filters);
 	}
 
-	// Count
-	async countDossierTypes(filter: any): Promise<number> {
-		return this.dossierTypeEntityService.countDossierTypes(filter);
+	async countDossierTypes(filters: any): Promise<number> {
+		return this.dossierTypeEntityService.countDossierTypes(filters);
 	}
 
 	async getDossierType(id: number): Promise<DossierTypeDto> {

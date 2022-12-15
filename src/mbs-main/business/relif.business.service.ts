@@ -16,13 +16,12 @@ export class RelifBusinessService {
 		return this.relifEntityService.updateRelif(relifDto);
 	}
 
-	async searchRelifs(filter: any): Promise<RelifDto[]> {
-		return this.relifEntityService.getRelifs(filter);
+	async searchRelifs(filters: any): Promise<RelifDto[]> {
+		return this.relifEntityService.getRelifs(filters);
 	}
 
-	// Count
-	async countRelifs(filter: any): Promise<number> {
-		return this.relifEntityService.countRelifs(filter);
+	async countRelifs(filters: any): Promise<number> {
+		return this.relifEntityService.countRelifs(filters);
 	}
 
 	async getRelif(id: number): Promise<RelifDto> {

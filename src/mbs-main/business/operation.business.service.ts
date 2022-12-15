@@ -16,13 +16,12 @@ export class OperationBusinessService {
 		return this.operationEntityService.updateOperation(operationDto);
 	}
 
-	async searchOperations(filter: any): Promise<OperationDto[]> {
-		return this.operationEntityService.getOperations(filter);
+	async searchOperations(filters: any): Promise<OperationDto[]> {
+		return this.operationEntityService.getOperations(filters);
 	}
 
-	// Count
-	async countOperations(filter: any): Promise<number> {
-		return this.operationEntityService.countOperations(filter);
+	async countOperations(filters: any): Promise<number> {
+		return this.operationEntityService.countOperations(filters);
 	}
 
 	async getOperation(id: number): Promise<OperationDto> {

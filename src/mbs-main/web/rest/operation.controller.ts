@@ -37,14 +37,16 @@ export class OperationController {
     @ApiResponse({ status: 200, description: 'List of operations.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     getAllOperations(@Query() queryParams): Promise<any> {
-        return this.operationBusinessService.searchOperations(queryParams);
+        let filters: any = queryParams;
+        return this.operationBusinessService.searchOperations(filters);
     }
 
     @Get('operations/count')
     @ApiResponse({ status: 200, description: 'Count of operations.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     getOperationsCount(@Query() queryParams): Promise<number> {
-        return this.operationBusinessService.countOperations(queryParams);
+        let filters: any = queryParams;
+        return this.operationBusinessService.countOperations(filters);
     }
 
     @Get('operations/:id')
