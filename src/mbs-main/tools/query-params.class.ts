@@ -39,10 +39,16 @@ export class QueryParamsTools {
 		for (const key in filters) {
 			let paramWhere = this.getSingleWhere(key);
 			if(paramWhere === undefined) continue;
+            if(paramWhere['value'].endsWith("Id")) {
+                wheres[paramWhere['value']] = {
+                    [paramWhere['key']]: +filters[key],
+                };
+                continue;
+            }
 			wheres[paramWhere['value']] = {
 				[paramWhere['key']]: filters[key],
 				mode: 'insensitive',
-			}
+			};
 		}
 		return wheres;
 	}

@@ -27,16 +27,12 @@ export class RelifDto {
 		type: Date,
 		required: false
 	})
-	@IsNotEmpty()
-	@IsString()
 	startDate?: Date;
 
     @ApiProperty({
 		type: Date,
 		required: false
 	})
-	@IsNotEmpty()
-	@IsString()
 	endDate?: Date;
 
 
