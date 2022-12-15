@@ -37,7 +37,7 @@ export class OperationTypeEntityService {
 		}
 		// Filter
 		{
-
+			prismaRequestArgs['where'] = QueryParamsTools.getPrismaWhereObject(filters);
 		}
 		// Join
 		{
@@ -54,7 +54,7 @@ export class OperationTypeEntityService {
 		let prismaRequestArgs: any = {};
 		// Filter
 		{
-
+			prismaRequestArgs['where'] = QueryParamsTools.getPrismaWhereObject(filters);
 		}
 		return await this.prisma.operationType.count(prismaRequestArgs);
 	}

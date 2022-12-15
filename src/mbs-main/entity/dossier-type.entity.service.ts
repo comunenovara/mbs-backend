@@ -39,7 +39,7 @@ export class DossierTypeEntityService {
 		}
 		// Filter
 		{
-
+			prismaRequestArgs['where'] = QueryParamsTools.getPrismaWhereObject(filters);
 		}
 		// Join
 		{
@@ -56,7 +56,7 @@ export class DossierTypeEntityService {
 		let prismaRequestArgs: any = {};
 		// Filter
 		{
-
+			prismaRequestArgs['where'] = QueryParamsTools.getPrismaWhereObject(filters);
 		}
 		return await this.prisma.dossierType.count(prismaRequestArgs);
 	}

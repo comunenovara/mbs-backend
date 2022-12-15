@@ -41,7 +41,7 @@ export class AssetEntityService {
 		}
 		// Filter
 		{
-
+			prismaRequestArgs['where'] = QueryParamsTools.getPrismaWhereObject(filters);
 		}
 		// Join
 		{
@@ -58,7 +58,7 @@ export class AssetEntityService {
 		let prismaRequestArgs: any = {};
 		// Filter
 		{
-
+			prismaRequestArgs['where'] = QueryParamsTools.getPrismaWhereObject(filters);
 		}
 		return await this.prisma.asset.count(prismaRequestArgs);
 	}

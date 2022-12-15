@@ -43,7 +43,7 @@ export class RelifEntityService {
 		}
 		// Filter
 		{
-
+			prismaRequestArgs['where'] = QueryParamsTools.getPrismaWhereObject(filters);
 		}
 		// Join
 		{
@@ -63,7 +63,7 @@ export class RelifEntityService {
 		let prismaRequestArgs: any = {};
 		// Filter
 		{
-
+			prismaRequestArgs['where'] = QueryParamsTools.getPrismaWhereObject(filters);
 		}
 		return await this.prisma.relif.count(prismaRequestArgs);
 	}
