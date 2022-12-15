@@ -1,97 +1,35 @@
 import { Injectable } from "@nestjs/common";
 import { DossierDto } from "../dto/dossier.dto";
-import { PrismaService } from "../repository/prisma.service";
-import { QueryParamsTools } from "../tools/query-params.class";
+import { DossierEntityService } from "../entity/dossier.entity.service";
 
 @Injectable({})
 export class DossierBusinessService {
 	constructor(
-		private prisma: PrismaService,
+		private dossierEntityService: DossierEntityService,
 	) {}
 
-	async addDossier(dossierDto: DossierDto) {
-		return await this.prisma.dossier.create({
-			data: {
-				typeId: dossierDto.typeId,
-				assetId: dossierDto.assetId,
-				relifId: dossierDto.relifId,
-				operationId: dossierDto.operationId,
-				description: dossierDto.description,
-			},
-		});
+	async createDossier(dossierDto: DossierDto) {
+		return this.dossierEntityService.insertDossier(dossierDto);
 	}
 
 	async editDossier(dossierDto: DossierDto) {
-		return await this.prisma.dossier.update({
-			where: {
-				id: dossierDto.id,
-			},
-			data: {
-				typeId: dossierDto.typeId,
-				assetId: dossierDto.assetId,
-				relifId: dossierDto.relifId,
-				operationId: dossierDto.operationId,
-				description: dossierDto.description,
-			},
-		});
+		return this.dossierEntityService.updateDossier(dossierDto);
 	}
 
-	// Search
-	async getDossiers(queryParams: any): Promise<DossierDto[]> {
-		let prismaRequestArgs: any = {};
-		// Pagination
-		if(queryParams.size !== undefined && queryParams.page !== undefined) {
-			prismaRequestArgs = { ...QueryParamsTools.getPrismaPaginationObject(queryParams) };
-		}
-		// Filter
-		{
-
-		}
-		// Join
-		{
-			prismaRequestArgs['include'] = {
-				type: true,
-				asset: true,
-				relif: true,
-				operation: true,
-			};
-		}
-		// Order
-		if(queryParams.orderBy !== undefined) {
-			prismaRequestArgs['orderBy'] = QueryParamsTools.getPrismaOrderByArray(queryParams);
-		}
-		return await this.prisma.dossier.findMany(prismaRequestArgs);
+	async searchDossiers(filter: any): Promise<DossierDto[]> {
+		return this.dossierEntityService.getDossiers(filter);
 	}
 
 	// Count
-	async countDossiers(queryParams: any): Promise<number> {
-		let prismaRequestArgs: any = {};
-		// Filter
-		{
-
-		}
-		return await this.prisma.dossier.count(prismaRequestArgs);
+	async countDossiers(filter: any): Promise<number> {
+		return this.dossierEntityService.countDossiers(filter);
 	}
 
 	async getDossier(id: number): Promise<DossierDto> {
-		return await this.prisma.dossier.findUnique({
-			where: {
-				id: id,
-			},
-			include: {
-				type: true,
-				asset: true,
-				relif: true,
-				operation: true,
-			},
-		})
+		return this.dossierEntityService.getDossier(id);
 	}
 
 	async deleteDossier(id: number) {
-		return await this.prisma.dossier.delete({
-			where: {
-				id: id,
-			}
-		});
+		return this.dossierEntityService.deleteDossier(id);
 	}
 }

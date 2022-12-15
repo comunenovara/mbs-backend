@@ -19,7 +19,7 @@ export class DossierTypeController {
         if(dossierTypeDto.id !== undefined) {
             throw new BadRequestException("not insert id in creation");
         }
-        return this.dossierTypeBusinessService.addDossierType(dossierTypeDto);
+        return this.dossierTypeBusinessService.createDossierType(dossierTypeDto);
     }
 
     @Put('dossierTypes')
@@ -37,7 +37,7 @@ export class DossierTypeController {
     @ApiResponse({ status: 200, description: 'List of dossierTypes.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     getAllDossierTypes(@Query() queryParams): Promise<any> {
-        return this.dossierTypeBusinessService.getDossierTypes(queryParams);
+        return this.dossierTypeBusinessService.searchDossierTypes(queryParams);
     }
 
     @Get('dossierTypes/count')

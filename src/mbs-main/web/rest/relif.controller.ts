@@ -19,7 +19,7 @@ export class RelifController {
         if(relifDto.id !== undefined) {
             throw new BadRequestException("not insert id in creation");
         }
-        return this.relifBusinessService.addRelif(relifDto);
+        return this.relifBusinessService.createRelif(relifDto);
     }
 
     @Put('relifs')
@@ -37,7 +37,7 @@ export class RelifController {
     @ApiResponse({ status: 200, description: 'List of relifs.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     getAllRelifs(@Query() queryParams): Promise<any> {
-        return this.relifBusinessService.getRelifs(queryParams);
+        return this.relifBusinessService.searchRelifs(queryParams);
     }
 
     @Get('relifs/count')

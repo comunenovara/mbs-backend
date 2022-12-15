@@ -1,81 +1,35 @@
 import { Injectable } from "@nestjs/common";
 import { AssetDto } from "../dto/asset.dto";
-import { PrismaService } from "../repository/prisma.service";
-import { QueryParamsTools } from "../tools/query-params.class";
+import { AssetEntityService } from "../entity/asset.entity.service";
 
 @Injectable({})
 export class AssetBusinessService {
 	constructor(
-		private prisma: PrismaService,
+		private assetEntityService: AssetEntityService,
 	) {}
 
-	async addAsset(assetDto: AssetDto) {
-		return await this.prisma.asset.create({
-			data: {
-				description: assetDto.description,
-				address: assetDto.address,
-				mq: assetDto.mq,
-			},
-		});
+	async createAsset(assetDto: AssetDto) {
+		return this.assetEntityService.insertAsset(assetDto);
 	}
 
 	async editAsset(assetDto: AssetDto) {
-		return await this.prisma.asset.update({
-			where: {
-				id: assetDto.id,
-			},
-			data: {
-				description: assetDto.description,
-				address: assetDto.address,
-				mq: assetDto.mq,
-			},
-		});
+		return this.assetEntityService.updateAsset(assetDto);
 	}
 
-	// Search
-	async getAssets(queryParams: any): Promise<AssetDto[]> {
-		let prismaRequestArgs: any = {};
-		// Pagination
-		if(queryParams.size !== undefined && queryParams.page !== undefined) {
-			prismaRequestArgs = { ...QueryParamsTools.getPrismaPaginationObject(queryParams) };
-		}
-		// Filter
-		{
-
-		}
-		// Join
-		{
-		}
-		// Order
-		if(queryParams.orderBy !== undefined) {
-			prismaRequestArgs['orderBy'] = QueryParamsTools.getPrismaOrderByArray(queryParams);
-		}
-		return await this.prisma.asset.findMany(prismaRequestArgs);
+	async searchAssets(filter: any): Promise<AssetDto[]> {
+		return this.assetEntityService.getAssets(filter);
 	}
 
 	// Count
-	async countAssets(queryParams: any): Promise<number> {
-		let prismaRequestArgs: any = {};
-		// Filter
-		{
-
-		}
-		return await this.prisma.asset.count(prismaRequestArgs);
+	async countAssets(filter: any): Promise<number> {
+		return this.assetEntityService.countAssets(filter);
 	}
 
 	async getAsset(id: number): Promise<AssetDto> {
-		return await this.prisma.asset.findUnique({
-			where: {
-				id: id,
-			},
-		})
+		return this.assetEntityService.getAsset(id);
 	}
 
 	async deleteAsset(id: number) {
-		return await this.prisma.asset.delete({
-			where: {
-				id: id,
-			}
-		});
+		return this.assetEntityService.deleteAsset(id);
 	}
 }

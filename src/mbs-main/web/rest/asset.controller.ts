@@ -19,7 +19,7 @@ export class AssetController {
         if(assetDto.id !== undefined) {
             throw new BadRequestException("not insert id in creation");
         }
-        return this.assetBusinessService.addAsset(assetDto);
+        return this.assetBusinessService.createAsset(assetDto);
     }
 
     @Put('assets')
@@ -37,7 +37,7 @@ export class AssetController {
     @ApiResponse({ status: 200, description: 'List of assets.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     getAllAssets(@Query() queryParams): Promise<any> {
-        return this.assetBusinessService.getAssets(queryParams);
+        return this.assetBusinessService.searchAssets(queryParams);
     }
 
     @Get('assets/count')

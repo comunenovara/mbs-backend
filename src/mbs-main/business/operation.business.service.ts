@@ -1,95 +1,35 @@
 import { Injectable } from "@nestjs/common";
 import { OperationDto } from "../dto/operation.dto";
-import { PrismaService } from "../repository/prisma.service";
-import { QueryParamsTools } from "../tools/query-params.class";
+import { OperationEntityService } from "../entity/operation.entity.service";
 
 @Injectable({})
 export class OperationBusinessService {
 	constructor(
-		private prisma: PrismaService,
+		private operationEntityService: OperationEntityService,
 	) {}
 
-	async addOperation(operationDto: OperationDto) {
-		return await this.prisma.operation.create({
-			data: {
-				typeId: operationDto.typeId,
-				assetId: operationDto.assetId,
-				description: operationDto.description,
-				value: operationDto.value,
-				startDate: operationDto.startDate,
-				endDate: operationDto.endDate,
-			},
-		});
+	async createOperation(operationDto: OperationDto) {
+		return this.operationEntityService.insertOperation(operationDto);
 	}
 
 	async editOperation(operationDto: OperationDto) {
-		return await this.prisma.operation.update({
-			where: {
-				id: operationDto.id,
-			},
-			data: {
-				typeId: operationDto.typeId,
-				assetId: operationDto.assetId,
-				description: operationDto.description,
-				value: operationDto.value,
-				startDate: operationDto.startDate,
-				endDate: operationDto.endDate,
-			},
-		});
+		return this.operationEntityService.updateOperation(operationDto);
 	}
 
-	// Search
-	async getOperations(queryParams: any): Promise<OperationDto[]> {
-		let prismaRequestArgs: any = {};
-		// Pagination
-		if(queryParams.size !== undefined && queryParams.page !== undefined) {
-			prismaRequestArgs = { ...QueryParamsTools.getPrismaPaginationObject(queryParams) };
-		}
-		// Filter
-		{
-
-		}
-		// Join
-		{
-			prismaRequestArgs['include'] = {
-				type: true,
-				asset: true,
-			};
-		}
-		// Order
-		if(queryParams.orderBy !== undefined) {
-			prismaRequestArgs['orderBy'] = QueryParamsTools.getPrismaOrderByArray(queryParams);
-		}
-		return await this.prisma.operation.findMany(prismaRequestArgs);
+	async searchOperations(filter: any): Promise<OperationDto[]> {
+		return this.operationEntityService.getOperations(filter);
 	}
 
 	// Count
-	async countOperations(queryParams: any): Promise<number> {
-		let prismaRequestArgs: any = {};
-		// Filter
-		{
-
-		}
-		return await this.prisma.operation.count(prismaRequestArgs);
+	async countOperations(filter: any): Promise<number> {
+		return this.operationEntityService.countOperations(filter);
 	}
 
 	async getOperation(id: number): Promise<OperationDto> {
-		return await this.prisma.operation.findUnique({
-			where: {
-				id: id,
-			},
-			include: {
-				type: true,
-				asset: true,
-			},
-		})
+		return this.operationEntityService.getOperation(id);
 	}
 
 	async deleteOperation(id: number) {
-		return await this.prisma.operation.delete({
-			where: {
-				id: id,
-			}
-		});
+		return this.operationEntityService.deleteOperation(id);
 	}
 }

@@ -19,7 +19,7 @@ export class DossierController {
         if(dossierDto.id !== undefined) {
             throw new BadRequestException("not insert id in creation");
         }
-        return this.dossierBusinessService.addDossier(dossierDto);
+        return this.dossierBusinessService.createDossier(dossierDto);
     }
 
     @Put('dossiers')
@@ -37,7 +37,7 @@ export class DossierController {
     @ApiResponse({ status: 200, description: 'List of dossiers.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     getAllDossiers(@Query() queryParams): Promise<any> {
-        return this.dossierBusinessService.getDossiers(queryParams);
+        return this.dossierBusinessService.searchDossiers(queryParams);
     }
 
     @Get('dossiers/count')

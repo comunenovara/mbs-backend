@@ -19,7 +19,7 @@ export class OperationTypeController {
         if(operationTypeDto.id !== undefined) {
             throw new BadRequestException("not insert id in creation");
         }
-        return this.operationTypeBusinessService.addOperationType(operationTypeDto);
+        return this.operationTypeBusinessService.createOperationType(operationTypeDto);
     }
 
     @Put('operationTypes')
@@ -37,7 +37,7 @@ export class OperationTypeController {
     @ApiResponse({ status: 200, description: 'List of operationTypes.'})
     @ApiResponse({ status: 403, description: 'Forbidden.'})
     getAllOperationTypes(@Query() queryParams): Promise<any> {
-        return this.operationTypeBusinessService.getOperationTypes(queryParams);
+        return this.operationTypeBusinessService.searchOperationTypes(queryParams);
     }
 
     @Get('operationTypes/count')
