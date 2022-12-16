@@ -49,12 +49,17 @@ export class QueryParamsTools {
 
 					entityToSearch = paramWhere['value'];
 					{
-						if (paramWhere['value'].endsWith("Id")) {
+						if (paramWhere['value'].endsWith("Id") || paramWhere['value'] == "id") {
 							entityFilters = {
 								[paramWhere['key']]: +filters[param],
 							};
-							continue;
-						} else {
+						}
+						/*
+						else if (paramWhere['value'] == "id") {
+							
+						}
+						*/
+						else {
 							entityFilters = {
 								[paramWhere['key']]: filters[param],
 								mode: 'insensitive',
@@ -75,7 +80,6 @@ export class QueryParamsTools {
 			}
 			wheres = { ...wheres, ...tree };
 		}
-
 		return wheres;
 	}
 
