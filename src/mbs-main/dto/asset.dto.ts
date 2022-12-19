@@ -26,7 +26,7 @@ export class AssetDto {
 		type: String,
 		required: false
 	})
-	@IsNotEmpty()
+	@IsOptional()
 	@IsString()
 	address?: string;
 
@@ -34,6 +34,7 @@ export class AssetDto {
 		type: Number,
 		required: false
 	})
+	@IsOptional()
 	@IsNumber()
 	mq?: number;
 

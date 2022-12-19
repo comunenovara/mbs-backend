@@ -28,7 +28,7 @@ export class OperationDto {
 		type: Number,
 		required: false
 	})
-	@IsNotEmpty()
+	@IsOptional()
 	@IsNumber()
 	value?: Decimal;
 
@@ -36,6 +36,7 @@ export class OperationDto {
 		type: Date,
 		required: false
 	})
+	@IsOptional()
 	@IsDateString()
 	startDate?: Date;
 
@@ -43,6 +44,8 @@ export class OperationDto {
 		type: Date,
 		required: false
 	})
+	@IsOptional()
+	@IsDateString()
 	endDate?: Date;
 
 

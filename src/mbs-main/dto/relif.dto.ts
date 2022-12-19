@@ -34,6 +34,8 @@ export class RelifDto {
 		type: Date,
 		required: false
 	})
+	@IsOptional()
+	@IsDateString()
 	endDate?: Date;
 
 
