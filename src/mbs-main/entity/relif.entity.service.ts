@@ -12,7 +12,11 @@ export class RelifEntityService {
 	async insertRelif(relifDto: RelifDto) {
 		return await this.prisma.relif.create({
 			data: {
-				assetId: relifDto.assetId,
+				asset: {
+					connect: {
+						id: relifDto.assetId
+					}
+				},
 				description: relifDto.description,
 				startDate: relifDto.startDate,
 				endDate: relifDto.endDate,

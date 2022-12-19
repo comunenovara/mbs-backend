@@ -12,10 +12,26 @@ export class DossierEntityService {
 	async insertDossier(dossierDto: DossierDto) {
 		return await this.prisma.dossier.create({
 			data: {
-				typeId: dossierDto.typeId,
-				assetId: dossierDto.assetId,
-				relifId: dossierDto.relifId,
-				operationId: dossierDto.operationId,
+				type: {
+					connect: {
+						id: dossierDto.typeId
+					}
+				},
+				asset: {
+					connect: {
+						id: dossierDto.assetId
+					}
+				},
+				relif: {
+					connect: {
+						id: dossierDto.relifId
+					}
+				},
+				operation: {
+					connect: {
+						id: dossierDto.operationId
+					}
+				},
 				description: dossierDto.description,
 			},
 		});

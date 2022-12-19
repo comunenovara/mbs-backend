@@ -12,8 +12,16 @@ export class OperationEntityService {
 	async insertOperation(operationDto: OperationDto) {
 		return await this.prisma.operation.create({
 			data: {
-				typeId: operationDto.typeId,
-				assetId: operationDto.assetId,
+				type: {
+					connect: {
+						id: operationDto.typeId
+					}
+				},
+				asset: {
+					connect: {
+						id: operationDto.assetId
+					}
+				},
 				description: operationDto.description,
 				value: operationDto.value,
 				startDate: operationDto.startDate,

@@ -1,5 +1,5 @@
 import { ApiProperty, ApiTags } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 import { Decimal } from "@prisma/client/runtime";
 
 import { OperationTypeDto } from "./operation-type.dto";
@@ -29,23 +29,20 @@ export class OperationDto {
 		required: false
 	})
 	@IsNotEmpty()
-	@IsString()
+	@IsNumber()
 	value?: Decimal;
 
     @ApiProperty({
 		type: Date,
 		required: false
 	})
-	@IsNotEmpty()
-	@IsString()
+	@IsDateString()
 	startDate?: Date;
 
     @ApiProperty({
 		type: Date,
 		required: false
 	})
-	@IsNotEmpty()
-	@IsString()
 	endDate?: Date;
 
 
