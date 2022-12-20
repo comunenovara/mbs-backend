@@ -10,18 +10,22 @@ export class RelifEntityService {
 	) {}
 
 	async insertRelif(relifDto: RelifDto) {
-		return await this.prisma.relif.create({
-			data: {
-				asset: {
-					connect: {
-						id: relifDto.assetId
-					}
-				},
-				description: relifDto.description,
-				startDate: relifDto.startDate,
-				endDate: relifDto.endDate,
-			},
-		});
+		let prismaRequestArgs: any = {};
+		// Fileds
+		prismaRequestArgs['data'] = {
+			description: relifDto.description,
+			startDate: relifDto.startDate,
+			endDate: relifDto.endDate,
+		};
+		// Relations
+		if(relifDto.assetId != null) {
+			prismaRequestArgs['data']['asset'] = {
+				connect: {
+					id: relifDto.assetId
+				}
+			};
+		}
+		return await this.prisma.relif.create(prismaRequestArgs);
 	}
 
 	async updateRelif(relifDto: RelifDto) {

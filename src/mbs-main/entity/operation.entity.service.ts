@@ -10,24 +10,30 @@ export class OperationEntityService {
 	) {}
 
 	async insertOperation(operationDto: OperationDto) {
-		return await this.prisma.operation.create({
-			data: {
-				type: {
-					connect: {
-						id: operationDto.typeId
-					}
-				},
-				asset: {
-					connect: {
-						id: operationDto.assetId
-					}
-				},
-				description: operationDto.description,
-				value: operationDto.value,
-				startDate: operationDto.startDate,
-				endDate: operationDto.endDate,
-			},
-		});
+		let prismaRequestArgs: any = {};
+		// Fileds
+		prismaRequestArgs['data'] = {
+			description: operationDto.description,
+			value: operationDto.value,
+			startDate: operationDto.startDate,
+			endDate: operationDto.endDate,
+		};
+		// Relations
+		if(operationDto.typeId != null) {
+			prismaRequestArgs['data']['type'] = {
+				connect: {
+					id: operationDto.typeId
+				}
+			};
+		}
+		if(operationDto.assetId != null) {
+			prismaRequestArgs['data']['asset'] = {
+				connect: {
+					id: operationDto.assetId
+				}
+			};
+		}
+		return await this.prisma.operation.create(prismaRequestArgs);
 	}
 
 	async updateOperation(operationDto: OperationDto) {

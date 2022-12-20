@@ -10,12 +10,14 @@ export class DossierTypeEntityService {
 	) {}
 
 	async insertDossierType(dossierTypeDto: DossierTypeDto) {
-		return await this.prisma.dossierType.create({
-			data: {
-				description: dossierTypeDto.description,
-				category: dossierTypeDto.category,
-			},
-		});
+		let prismaRequestArgs: any = {};
+		// Fileds
+		prismaRequestArgs['data'] = {
+			description: dossierTypeDto.description,
+			category: dossierTypeDto.category,
+		};
+		// Relations
+		return await this.prisma.dossierType.create(prismaRequestArgs);
 	}
 
 	async updateDossierType(dossierTypeDto: DossierTypeDto) {

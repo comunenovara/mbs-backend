@@ -10,11 +10,13 @@ export class OperationTypeEntityService {
 	) {}
 
 	async insertOperationType(operationTypeDto: OperationTypeDto) {
-		return await this.prisma.operationType.create({
-			data: {
-				description: operationTypeDto.description,
-			},
-		});
+		let prismaRequestArgs: any = {};
+		// Fileds
+		prismaRequestArgs['data'] = {
+			description: operationTypeDto.description,
+		};
+		// Relations
+		return await this.prisma.operationType.create(prismaRequestArgs);
 	}
 
 	async updateOperationType(operationTypeDto: OperationTypeDto) {

@@ -10,13 +10,15 @@ export class AssetEntityService {
 	) {}
 
 	async insertAsset(assetDto: AssetDto) {
-		return await this.prisma.asset.create({
-			data: {
-				description: assetDto.description,
-				address: assetDto.address,
-				mq: assetDto.mq,
-			},
-		});
+		let prismaRequestArgs: any = {};
+		// Fileds
+		prismaRequestArgs['data'] = {
+			description: assetDto.description,
+			address: assetDto.address,
+			mq: assetDto.mq,
+		};
+		// Relations
+		return await this.prisma.asset.create(prismaRequestArgs);
 	}
 
 	async updateAsset(assetDto: AssetDto) {

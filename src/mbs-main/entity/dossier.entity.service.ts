@@ -10,31 +10,41 @@ export class DossierEntityService {
 	) {}
 
 	async insertDossier(dossierDto: DossierDto) {
-		return await this.prisma.dossier.create({
-			data: {
-				type: {
-					connect: {
-						id: dossierDto.typeId
-					}
-				},
-				asset: {
-					connect: {
-						id: dossierDto.assetId
-					}
-				},
-				relif: {
-					connect: {
-						id: dossierDto.relifId
-					}
-				},
-				operation: {
-					connect: {
-						id: dossierDto.operationId
-					}
-				},
-				description: dossierDto.description,
-			},
-		});
+		let prismaRequestArgs: any = {};
+		// Fileds
+		prismaRequestArgs['data'] = {
+			description: dossierDto.description,
+		};
+		// Relations
+		if(dossierDto.typeId != null) {
+			prismaRequestArgs['data']['type'] = {
+				connect: {
+					id: dossierDto.typeId
+				}
+			};
+		}
+		if(dossierDto.assetId != null) {
+			prismaRequestArgs['data']['asset'] = {
+				connect: {
+					id: dossierDto.assetId
+				}
+			};
+		}
+		if(dossierDto.relifId != null) {
+			prismaRequestArgs['data']['relif'] = {
+				connect: {
+					id: dossierDto.relifId
+				}
+			};
+		}
+		if(dossierDto.operationId != null) {
+			prismaRequestArgs['data']['operation'] = {
+				connect: {
+					id: dossierDto.operationId
+				}
+			};
+		}
+		return await this.prisma.dossier.create(prismaRequestArgs);
 	}
 
 	async updateDossier(dossierDto: DossierDto) {
