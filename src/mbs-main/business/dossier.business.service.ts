@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { DossierDto } from "../dto/dossier.dto";
 import { DossierEntityService } from "../entity/dossier.entity.service";
 
@@ -9,16 +9,6 @@ export class DossierBusinessService {
 	) {}
 
 	async createDossier(dossierDto: DossierDto) {
-		console.log(dossierDto);
-		if(
-			(dossierDto.assetId != null && dossierDto.operationId != null)
-			||
-			(dossierDto.assetId != null && dossierDto.relifId != null)
-			||
-			(dossierDto.operationId != null && dossierDto.relifId != null)
-		) {
-			throw new BadRequestException("Dossier is possible to associate only to one of this: Asset, Operation, Relif");
-		}
 		return this.dossierEntityService.insertDossier(dossierDto);
 	}
 

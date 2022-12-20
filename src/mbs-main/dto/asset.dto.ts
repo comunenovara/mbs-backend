@@ -1,5 +1,5 @@
 import { ApiProperty, ApiTags } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 import { Decimal } from "@prisma/client/runtime";
 
 
@@ -26,7 +26,7 @@ export class AssetDto {
 		type: String,
 		required: false
 	})
-	@IsOptional()
+	@IsNotEmpty()
 	@IsString()
 	address?: string;
 
@@ -34,8 +34,8 @@ export class AssetDto {
 		type: Number,
 		required: false
 	})
-	@IsOptional()
-	@IsNumber()
+	@IsNotEmpty()
+	@IsString()
 	mq?: number;
 
 

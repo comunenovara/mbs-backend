@@ -1,5 +1,5 @@
 import { ApiProperty, ApiTags } from "@nestjs/swagger";
-import { IsDateString, isDateString, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 import { Decimal } from "@prisma/client/runtime";
 
 import { AssetDto } from "./asset.dto";
@@ -27,15 +27,16 @@ export class RelifDto {
 		type: Date,
 		required: false
 	})
-	@IsDateString()
+	@IsNotEmpty()
+	@IsString()
 	startDate?: Date;
 
     @ApiProperty({
 		type: Date,
 		required: false
 	})
-	@IsOptional()
-	@IsDateString()
+	@IsNotEmpty()
+	@IsString()
 	endDate?: Date;
 
 

@@ -27,22 +27,18 @@ export class DossierDto {
 	description?: string;
 
 
-	@IsOptional()
 	@IsNumber()
 	typeId?: number;
 	type?: DossierTypeDto;
 
-	@IsOptional()
 	@IsNumber()
 	assetId?: number;
 	asset?: AssetDto;
 
-	@IsOptional()
 	@IsNumber()
 	relifId?: number;
 	relif?: RelifDto;
 
-	@IsOptional()
 	@IsNumber()
 	operationId?: number;
 	operation?: OperationDto;
