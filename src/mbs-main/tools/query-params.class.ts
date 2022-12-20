@@ -62,7 +62,7 @@ export class QueryParamsTools {
 						else {
 							entityFilters = {
 								[paramWhere['key']]: filters[param],
-								mode: 'insensitive',
+								//mode: 'insensitive', # only for postgres
 							};
 						}
 					}
