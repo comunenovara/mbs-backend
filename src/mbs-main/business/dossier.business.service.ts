@@ -9,7 +9,6 @@ export class DossierBusinessService {
 	) {}
 
 	async createDossier(dossierDto: DossierDto) {
-		console.log(dossierDto);
 		if(
 			(dossierDto.assetId != null && dossierDto.operationId != null)
 			||
