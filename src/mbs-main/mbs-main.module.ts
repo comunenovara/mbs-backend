@@ -19,11 +19,15 @@ import { OperationTypeController } from './web/rest/operation-type.controller';
 import { RelifBusinessService } from './business/relif.business.service';
 import { RelifEntityService } from './entity/relif.entity.service';
 import { RelifController } from './web/rest/relif.controller';
+import { FileManagerService } from './mbs/file-manager.service';
+import { FileOperationService } from './mbs/file-operation.service';
 
 @Module({
 	providers: [
 		PrismaService,
 
+		FileOperationService,
+		
 		AssetBusinessService,
 		AssetEntityService,
 		DossierBusinessService,
@@ -37,6 +41,9 @@ import { RelifController } from './web/rest/relif.controller';
 		RelifBusinessService,
 		RelifEntityService,
 
+		
+		FileManagerService,
+		
 	],
 	controllers: [
 		AssetController,

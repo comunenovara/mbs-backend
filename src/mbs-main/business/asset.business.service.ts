@@ -1,22 +1,28 @@
 import { Injectable } from "@nestjs/common";
 import { AssetDto } from "../dto/asset.dto";
 import { AssetEntityService } from "../entity/asset.entity.service";
+import { FileOperationService } from "../mbs/file-operation.service";
 
 @Injectable({})
 export class AssetBusinessService {
 	constructor(
 		private assetEntityService: AssetEntityService,
-	) {}
+		private fileOperationService: FileOperationService,
+	) { }
 
 	async createAsset(assetDto: AssetDto) {
-		return this.assetEntityService.insertAsset(assetDto);
+		let asset: AssetDto = await this.assetEntityService.insertAsset(assetDto);
+		{
+			this.fileOperationService.createAssetFolder(asset);
+		}
+		return asset;
 	}
 
 	async editAsset(assetDto: AssetDto) {
 		return this.assetEntityService.updateAsset(assetDto);
 	}
 
-	async searchAssets(filters: any): Promise<AssetDto[]> {
+	async searchAssets(filters: any = {}): Promise<AssetDto[]> {
 		return this.assetEntityService.getAssets(filters);
 	}
 
@@ -29,6 +35,8 @@ export class AssetBusinessService {
 	}
 
 	async deleteAsset(id: number) {
+		let asset: AssetDto = await this.getAsset(id);
+		this.fileOperationService.deleteAssetFolder(asset);
 		return this.assetEntityService.deleteAsset(id);
 	}
 }

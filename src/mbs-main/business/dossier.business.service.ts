@@ -25,7 +25,7 @@ export class DossierBusinessService {
 		return this.dossierEntityService.updateDossier(dossierDto);
 	}
 
-	async searchDossiers(filters: any): Promise<DossierDto[]> {
+	async searchDossiers(filters: any = {}): Promise<DossierDto[]> {
 		return this.dossierEntityService.getDossiers(filters);
 	}
 

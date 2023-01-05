@@ -35,7 +35,7 @@ export class AssetEntityService {
 	}
 
 	// Get
-	async getAssets(filters: any): Promise<AssetDto[]> {
+	async getAssets(filters: any = {}): Promise<AssetDto[]> {
 		let prismaRequestArgs: any = {};
 		// Pagination
 		if(filters.size !== undefined && filters.page !== undefined) {
