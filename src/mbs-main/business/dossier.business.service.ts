@@ -42,6 +42,12 @@ export class DossierBusinessService {
 	}
 
 	async deleteDossier(id: number) {
+		let dossier = await this.getDossier(id);
+		try {
+			this.dossierFileService.deleteDossierFolder(dossier);
+		} catch (error) {
+			console.log("errore nella cancellazione della cartella", error);
+		}
 		return this.dossierEntityService.deleteDossier(id);
 	}
 }

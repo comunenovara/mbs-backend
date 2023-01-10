@@ -129,8 +129,16 @@ export class DossierEntityService {
 			include: {
 				type: true,
 				asset: true,
-				relif: true,
-				operation: true,
+				relif: {
+					include: {
+						asset: true,
+					}
+				},
+				operation: {
+					include: {
+						asset: true,
+					}
+				},
 			},
 		})
 	}

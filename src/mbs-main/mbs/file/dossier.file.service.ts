@@ -64,5 +64,7 @@ export class DossierFileService {
 		return createdDossiers;
 	}
 
-	
+	deleteDossierFolder(dossier: DossierDto) {
+		fs.rmSync(this.pathsService.getDossierFolderPath(dossier), { recursive: true });
+	}
 }
