@@ -34,8 +34,8 @@ export class FileStructureCheckerService {
 					case ElementCategory.file:
 						switch (struElement.type) {
 							case ElementFileType.generic:	console.log("File mancante:", struElementPath, ". Invia mail di warning!"); break;
-							case ElementFileType.link: 		this.result.fileCreati.push(this.assetFileService.createAssetLinkFile(struElement.entity)); break;
-							case ElementFileType.base: 		this.result.fileCreati.push(this.assetFileService.createAssetBaseFile(struElement.entity)); break;
+							case ElementFileType.link: 		this.result.fileCreati.push(this.assetFileService.createAssetLinkFile(struElement.entity)); break; // NON GESTISCE TUTTI I TIPI DI LINK
+							case ElementFileType.base: 		this.result.fileCreati.push(this.assetFileService.createAssetBaseFile(struElement.entity)); break; // NON GESTISCE TUTTI I TIPI DI BASE
 						}
 						continue;
 					case ElementCategory.dir:

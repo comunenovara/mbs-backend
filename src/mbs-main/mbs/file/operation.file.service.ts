@@ -1,12 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import * as fs from 'fs';
 import { join } from "path";
-import { MBS_FOLDER_PATH } from "src/mbs-main/constants";
 import { AssetDto } from "src/mbs-main/dto/asset.dto";
 import { OperationDto } from "src/mbs-main/dto/operation.dto";
 import { OperationEntityService } from "src/mbs-main/entity/operation.entity.service";
 import { ElementCategory, ElementDirType, ElementFileType } from "../class/element.class";
-import { RELIF_DIR } from "../structure.costants";
+import { OPERATION_DIR } from "../structure.costants";
 import { DossierFileService } from "./dossier.file.service";
 import { PathsService } from "./paths.service";
 
@@ -46,8 +45,8 @@ export class OperationFileService {
 
 	async createOperationChilds(operation: OperationDto) {
 		let created = [];
-		for (let elementKey in RELIF_DIR) {
-			let element = RELIF_DIR[elementKey];
+		for (let elementKey in OPERATION_DIR) {
+			let element = OPERATION_DIR[elementKey];
 			switch (element.category) {
 				case ElementCategory.dir: {
 					switch (element.type) {
@@ -56,25 +55,27 @@ export class OperationFileService {
 				} break;
 				case ElementCategory.file: {
 					switch (element.type) {
-						case ElementFileType.generic: console.log("File mancante:", elementKey, ". Invia mail di warning!"); break;
-						case ElementFileType.link: created.push(this.createOperationLinkFile(operation)); break;
-						case ElementFileType.base: created.push(this.createOperationBaseFile(operation)); break;
+						case ElementFileType.generic:	console.log("File mancante:", elementKey, ". Invia mail di warning!"); break;
+						case ElementFileType.link:		created.push(this.createOperationLinkFile(operation)); break;
+						case ElementFileType.base:		created.push(this.createOperationBaseFile(operation)); break;
 					}
 				} break;
 			}
-			return created;
 		}
+		return created;
 	}
 
 	deleteOperationFolder(operation: OperationDto) {
 		fs.rmSync(this.pathsService.getOperationFolderPath(operation), { recursive: true });
 	}
 
-	private createOperationLinkFile(operation: OperationDto) {
-		//console.log("crea base file di:", asset.description);
+	private createOperationBaseFile(operation: OperationDto) {
+		let path = join(this.pathsService.getOperationFolderPath(operation), 'base_p0.dwg NO');
+		return path;
 	}
 
-	private createOperationBaseFile(operation: OperationDto) {
+	private createOperationLinkFile(operation: OperationDto) {
+		console.log("crea operation", operation);
 		let fileContent = `[InternetShortcut]
 		IDList=
 		URL=http://localhost:3000/enzo/operation/detail/${operation.id}/`;

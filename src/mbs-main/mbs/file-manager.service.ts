@@ -10,7 +10,7 @@ import { RelifEntityService } from '../entity/relif.entity.service';
 import { Element, ElementDirType, ElementCategory, IElements, ElementFileType } from './class/element.class';
 import { PathsService } from './file/paths.service';
 import { FileStructureCheckerService } from './file/structure-checker.service';
-import { ASSET_DIR } from './structure.costants';
+import { ASSET_DIR, OPERATION_DIR, RELIF_DIR } from './structure.costants';
 
 @Injectable({})
 export class FileManagerService implements OnModuleInit {
@@ -24,11 +24,11 @@ export class FileManagerService implements OnModuleInit {
 	) { }
 
 	async onModuleInit() {
-		let fileCheckResult = await this.fileStructureCheckerService.structureChek(await this.getElementsToCheck2());
+		let fileCheckResult = await this.fileStructureCheckerService.structureChek(await this.getElementsToCheck());
 		console.log(fileCheckResult.fileCreati);
 	}
 
-	async getElementsToCheck2(): Promise<IElements> {
+	async getElementsToCheck(): Promise<IElements> {
 		let tree: IElements = {};
 		{
 			let assets: AssetDto[] = await this.assetEntityService.getAssets();
@@ -54,15 +54,23 @@ export class FileManagerService implements OnModuleInit {
 										for (let relif of relifs) {
 											let relifElement: Element = new Element(ElementCategory.dir, ElementDirType.relif);
 											relifElement.entity = relif;
-											{
-												// Dossier
-												relifElement.addChilds(await this.getDossiers({ relifIdEquals: relif.id }))
-												// Files
-												{
-													//relifElement.addChild("Dettagli.link", new Element(ElementCategory.file, ElementFileType.link));
+											for (let elementRelifName in RELIF_DIR) {
+												let elementRelif = ASSET_DIR[elementRelifName];
+												switch (elementRelif.category) {
+													case ElementCategory.dir: {
+														switch (elementRelif.type) {
+															case ElementDirType.dossier:	relifElement.addChilds(await this.getDossiers({ relifIdEquals: relif.id })); break;
+														}
+													} break;
+													case ElementCategory.file: {
+														switch (elementRelif.type) {
+															case ElementFileType.generic: 	console.log("File mancante:", elementKey, ". Invia mail di warning!"); break;
+															//case ElementFileType.link: 		relifElement.addChild(elementRelifName, new Element(ElementCategory.file, ElementFileType.link)); break;
+															case ElementFileType.base: 		console.log("Tipo file non disponibile in questa sezione:", elementKey, ". Invia mail di warning!"); break;
+														}
+													} break;
 												}
 											}
-											// Save
 											relifsDirectory.addChild(this.pathsService.getRelifFolderPath(relif), relifElement);
 										}
 									}
@@ -77,15 +85,23 @@ export class FileManagerService implements OnModuleInit {
 										for (let operation of operations) {
 											let operationElement: Element = new Element(ElementCategory.dir, ElementDirType.operation);
 											operationElement.entity = operation;
-											{
-												// Dossier
-												operationElement.addChilds(await this.getDossiers({ operationIdEquals: operation.id }));
-												// Files
-												{
-													//operationElement.addChild("Dettagli.link", new Element(ElementCategory.file, ElementFileType.link));
+											for (let elementOperationName in OPERATION_DIR) {
+												let elementOperation = ASSET_DIR[elementOperationName];
+												switch (elementOperation.category) {
+													case ElementCategory.dir: {
+														switch (elementOperation.type) {
+															case ElementDirType.dossier:	elementOperation.addChilds(await this.getDossiers({ operationIdEquals: operation.id })); break;
+														}
+													} break;
+													case ElementCategory.file: {
+														switch (elementOperation.type) {
+															case ElementFileType.generic: 	console.log("File mancante:", elementKey, ". Invia mail di warning!"); break;
+															//case ElementFileType.link: 		elementOperation.addChild(elementOperationName, new Element(ElementCategory.file, ElementFileType.link)); break;
+															case ElementFileType.base: 		console.log("Tipo file non disponibile in questa sezione:", elementKey, ". Invia mail di warning!"); break;
+														}
+													} break;
 												}
 											}
-											// Save
 											operationsDirectory.addChild(this.pathsService.getOperationFolderPath(operation), operationElement);
 										}
 									}
@@ -107,79 +123,7 @@ export class FileManagerService implements OnModuleInit {
 		}
 		return tree;
 	}
-	/*
-		async getElementsToCheck(): Promise<IElements> {
-			let tree: IElements = {};
-			{
-				let assets: AssetDto[] = await this.assetEntityService.getAssets();
-				for (let asset of assets) {
-					let assetElement: Element = new Element(ElementCategory.dir, ElementDirType.asset);
-					assetElement.entity = asset;
-					// Dossier
-					assetElement.addChilds(await this.getDossiers({ assetIdEquals: asset.id }))
-					// Files
-					{
-						assetElement.addChild("Dettagli.link", new Element(ElementCategory.file, ElementFileType.link));
-					}
-					// Relif
-					{
-						let relifsDirectory: Element = new Element(ElementCategory.dir, ElementDirType.relifs);
-						relifsDirectory.entity = asset;
-						{
-							let relifs: RelifDto[] = await this.relifEntityService.getRelifs({ assetIdEquals: asset.id });
-							for (let relif of relifs) {
-								let relifElement: Element = new Element(ElementCategory.dir, ElementDirType.relif);
-								relifElement.entity = relif;
-								{
-									// Dossier
-									relifElement.addChilds(await this.getDossiers({ relifIdEquals: relif.id }))
-									// Files
-									{
-										//relifElement.addChild("Dettagli.link", new Element(ElementCategory.file, ElementFileType.link));
-									}
-								}
-								// Save
-								let relifFolderName: string = `r${relif.id}_ ${relif.description}`;
-								relifsDirectory.addChild(relifFolderName, relifElement);
-							}
-						}
-						let relifsFolderName: string = `_ Rilievi`;
-						assetElement.addChild(relifsFolderName, relifsDirectory);
-					}
-					// Operation
-					{
-						let operationsDirectory: Element = new Element(ElementCategory.dir, ElementDirType.operations);
-						operationsDirectory.entity = asset;
-						{
-							let operations: OperationDto[] = await this.operationEntityService.getOperations({ assetIdEquals: asset.id });
-							for (let operation of operations) {
-								let operationElement: Element = new Element(ElementCategory.dir, ElementDirType.operation);
-								operationElement.entity = operation;
-								{
-									// Dossier
-									operationElement.addChilds(await this.getDossiers({ operationIdEquals: operation.id }))
-									// Files
-									{
-										//operationElement.addChild("Dettagli.link", new Element(ElementCategory.file, ElementFileType.link));
-									}
-								}
-								// Save
-								let operationFolderName: string = `o${operation.id}_ ${operation.description}`;
-								operationsDirectory.addChild(operationFolderName, operationElement);
-							}
-						}
-						let operationsFolderName: string = `_ Interventi`;
-						assetElement.addChild(operationsFolderName, operationsDirectory);
-					}
-	
-					// Save
-					let assetFolderName: string = `${asset.id}_ ${asset.description}`;
-					tree[assetFolderName] = assetElement;
-				}
-			}
-			return tree;
-		}
-	*/
+
 	private async getDossiers(filter: any): Promise<IElements> {
 		let dossiersTree: IElements = {};
 		{

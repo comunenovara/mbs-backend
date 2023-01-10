@@ -70,12 +70,12 @@ export class RelifFileService {
 		fs.rmSync(this.pathsService.getRelifFolderPath(relif), { recursive: true });
 	}
 
-	private createRelifLinkFile(relif: RelifDto) {
-		//console.log("crea base file di:", asset.description);
-		return "link file non creato";
+	private createRelifBaseFile(relif: RelifDto) {
+		let path = join(this.pathsService.getRelifFolderPath(relif), 'base_p0.dwg NO');
+		return path;
 	}
 
-	private createRelifBaseFile(relif: RelifDto): string {
+	private createRelifLinkFile(relif: RelifDto) {
 		let fileContent = `[InternetShortcut]
 		IDList=
 		URL=http://localhost:3000/enzo/relif/detail/${relif.id}/`;
@@ -86,4 +86,6 @@ export class RelifFileService {
 		});
 		return path;
 	}
+
+	
 }

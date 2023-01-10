@@ -64,16 +64,17 @@ export class AssetFileService {
 	}
 
 	createAssetBaseFile(asset: AssetDto) {
-		let path = join(`${MBS_FOLDER_PATH}/${asset.id}_ ${asset.description}`, 'base_p0.dwg NO');
+		let path = join(this.pathsService.getAssetFolderPath(asset), 'base_p0.dwg NO');
 		return path;
 	}
 
 	createAssetLinkFile(asset: AssetDto) {
+		console.log(asset);
 		let fileContent = `[InternetShortcut]
 		IDList=
 		URL=http://localhost:3000/enzo/asset/detail/${asset.id}`;
 
-		let path = join(`${MBS_FOLDER_PATH}/${asset.id}_ ${asset.description}`, 'Dettagli.url');
+		let path = join(this.pathsService.getAssetFolderPath(asset), 'Dettagli.url');
 		fs.writeFileSync(path, fileContent, {
 			flag: 'w',
 		});
@@ -83,7 +84,7 @@ export class AssetFileService {
 
 
 	deleteAssetFolder(asset: AssetDto) {
-		let folderPath = `${MBS_FOLDER_PATH}/${asset.id}_ ${asset.description}`;
+		let folderPath = this.pathsService.getAssetFolderPath(asset);
 		fs.rmSync(folderPath, { recursive: true });
 	}
 }
