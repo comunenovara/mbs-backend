@@ -25,6 +25,9 @@ export class RelifEntityService {
 				}
 			};
 		}
+		prismaRequestArgs['include'] = {
+			asset: true,
+		};
 		return await this.prisma.relif.create(prismaRequestArgs);
 	}
 

@@ -20,14 +20,23 @@ import { RelifBusinessService } from './business/relif.business.service';
 import { RelifEntityService } from './entity/relif.entity.service';
 import { RelifController } from './web/rest/relif.controller';
 import { FileManagerService } from './mbs/file-manager.service';
-import { FileOperationService } from './mbs/file-operation.service';
+import { AssetFileService } from './mbs/file/asset.file.service';
+import { DossierFileService } from './mbs/file/dossier.file.service';
+import { RelifFileService } from './mbs/file/relif.file.service';
+import { PathsService } from './mbs/file/paths.service';
+import { OperationFileService } from './mbs/file/operation.file.service';
+import { FileStructureCheckerService } from './mbs/file/structure-checker.service';
 
 @Module({
 	providers: [
 		PrismaService,
-
-		FileOperationService,
+		PathsService,
 		
+		AssetFileService,
+		RelifFileService,
+		OperationFileService,
+		DossierFileService,
+
 		AssetBusinessService,
 		AssetEntityService,
 		DossierBusinessService,
@@ -41,8 +50,8 @@ import { FileOperationService } from './mbs/file-operation.service';
 		RelifBusinessService,
 		RelifEntityService,
 
-		
 		FileManagerService,
+		FileStructureCheckerService,
 		
 	],
 	controllers: [

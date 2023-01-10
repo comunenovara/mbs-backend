@@ -44,6 +44,20 @@ export class DossierEntityService {
 				}
 			};
 		}
+		prismaRequestArgs['include'] = {
+			type: true,
+			asset: true,
+			relif: {
+				include: {
+					asset: true,
+				}
+			},
+			operation: {
+				include: {
+					asset: true,
+				}
+			},
+		};
 		return await this.prisma.dossier.create(prismaRequestArgs);
 	}
 
@@ -78,8 +92,16 @@ export class DossierEntityService {
 			prismaRequestArgs['include'] = {
 				type: true,
 				asset: true,
-				relif: true,
-				operation: true,
+				relif: {
+					include: {
+						asset: true,
+					}
+				},
+				operation: {
+					include: {
+						asset: true,
+					}
+				},
 			};
 		}
 		// Order

@@ -1,11 +1,13 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { DossierDto } from "../dto/dossier.dto";
 import { DossierEntityService } from "../entity/dossier.entity.service";
+import { DossierFileService } from "../mbs/file/dossier.file.service";
 
 @Injectable({})
 export class DossierBusinessService {
 	constructor(
 		private dossierEntityService: DossierEntityService,
+		private dossierFileService: DossierFileService,
 	) {}
 
 	async createDossier(dossierDto: DossierDto) {
@@ -18,7 +20,9 @@ export class DossierBusinessService {
 		) {
 			throw new BadRequestException("Dossier is possible to associate only to one of this: Asset, Operation, Relif");
 		}
-		return this.dossierEntityService.insertDossier(dossierDto);
+		let dossier: DossierDto = await this.dossierEntityService.insertDossier(dossierDto);
+		this.dossierFileService.createDossier(dossier);
+		return dossier;
 	}
 
 	async editDossier(dossierDto: DossierDto) {

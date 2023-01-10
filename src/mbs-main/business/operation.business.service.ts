@@ -1,15 +1,19 @@
 import { Injectable } from "@nestjs/common";
 import { OperationDto } from "../dto/operation.dto";
 import { OperationEntityService } from "../entity/operation.entity.service";
+import { OperationFileService } from "../mbs/file/operation.file.service";
 
 @Injectable({})
 export class OperationBusinessService {
 	constructor(
 		private operationEntityService: OperationEntityService,
+		private operationFileService: OperationFileService,
 	) {}
 
 	async createOperation(operationDto: OperationDto) {
-		return this.operationEntityService.insertOperation(operationDto);
+		let operation: OperationDto = await this.operationEntityService.insertOperation(operationDto);
+		this.operationFileService.createOperation(operation);
+		return operation
 	}
 
 	async editOperation(operationDto: OperationDto) {
@@ -29,6 +33,12 @@ export class OperationBusinessService {
 	}
 
 	async deleteOperation(id: number) {
+		let operation = await this.getOperation(id);
+		try {
+			this.operationFileService.deleteOperationFolder(operation);	
+		} catch (error) {
+			console.log("errore nella cancellazione della cartella");
+		}
 		return this.operationEntityService.deleteOperation(id);
 	}
 }

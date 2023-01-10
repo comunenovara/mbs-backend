@@ -1,15 +1,19 @@
 import { Injectable } from "@nestjs/common";
 import { RelifDto } from "../dto/relif.dto";
 import { RelifEntityService } from "../entity/relif.entity.service";
+import { RelifFileService } from "../mbs/file/relif.file.service";
 
 @Injectable({})
 export class RelifBusinessService {
 	constructor(
 		private relifEntityService: RelifEntityService,
+		private relifFileService: RelifFileService,
 	) {}
 
 	async createRelif(relifDto: RelifDto) {
-		return this.relifEntityService.insertRelif(relifDto);
+		let relif: RelifDto = await this.relifEntityService.insertRelif(relifDto);
+		this.relifFileService.createRelif(relif);
+		return relif;
 	}
 
 	async editRelif(relifDto: RelifDto) {
@@ -29,6 +33,12 @@ export class RelifBusinessService {
 	}
 
 	async deleteRelif(id: number) {
+		let relif = await this.getRelif(id);
+		try {
+			this.relifFileService.deleteRelifFolder(relif);	
+		} catch (error) {
+			console.log("errore nella cancellazione della cartella");
+		}
 		return this.relifEntityService.deleteRelif(id);
 	}
 }

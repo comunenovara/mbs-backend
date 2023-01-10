@@ -33,6 +33,9 @@ export class OperationEntityService {
 				}
 			};
 		}
+		prismaRequestArgs['include'] = {
+			asset: true,
+		};
 		return await this.prisma.operation.create(prismaRequestArgs);
 	}
 

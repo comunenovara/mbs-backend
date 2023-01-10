@@ -1,20 +1,18 @@
 import { Injectable } from "@nestjs/common";
 import { AssetDto } from "../dto/asset.dto";
 import { AssetEntityService } from "../entity/asset.entity.service";
-import { FileOperationService } from "../mbs/file-operation.service";
+import { AssetFileService } from "../mbs/file/asset.file.service";
 
 @Injectable({})
 export class AssetBusinessService {
 	constructor(
 		private assetEntityService: AssetEntityService,
-		private fileOperationService: FileOperationService,
+		private assetFileService: AssetFileService,
 	) { }
 
 	async createAsset(assetDto: AssetDto) {
 		let asset: AssetDto = await this.assetEntityService.insertAsset(assetDto);
-		{
-			this.fileOperationService.createAssetFolder(asset);
-		}
+		this.assetFileService.createAsset(asset);
 		return asset;
 	}
 
@@ -36,7 +34,11 @@ export class AssetBusinessService {
 
 	async deleteAsset(id: number) {
 		let asset: AssetDto = await this.getAsset(id);
-		this.fileOperationService.deleteAssetFolder(asset);
+		try {
+			this.assetFileService.deleteAssetFolder(asset);	
+		} catch (error) {
+			console.log("errore nella cancellazione della cartella");
+		}
 		return this.assetEntityService.deleteAsset(id);
-	}
+	}	
 }
