@@ -55,7 +55,7 @@ export class FileManagerService implements OnModuleInit {
 											let relifElement: Element = new Element(ElementCategory.dir, ElementDirType.relif);
 											relifElement.entity = relif;
 											for (let elementRelifName in RELIF_DIR) {
-												let elementRelif = ASSET_DIR[elementRelifName];
+												let elementRelif = RELIF_DIR[elementRelifName];
 												switch (elementRelif.category) {
 													case ElementCategory.dir: {
 														switch (elementRelif.type) {
@@ -64,7 +64,7 @@ export class FileManagerService implements OnModuleInit {
 													} break;
 													case ElementCategory.file: {
 														switch (elementRelif.type) {
-															case ElementFileType.generic: 	console.log("File mancante:", elementKey, ". Invia mail di warning!"); break;
+															case ElementFileType.generic: 	console.log("File in relif mancante: '", elementRelifName, "' Invia mail di warning!"); break;
 															//case ElementFileType.link: 		relifElement.addChild(elementRelifName, new Element(ElementCategory.file, ElementFileType.link)); break;
 															case ElementFileType.base: 		console.log("Tipo file non disponibile in questa sezione:", elementKey, ". Invia mail di warning!"); break;
 														}
@@ -86,7 +86,7 @@ export class FileManagerService implements OnModuleInit {
 											let operationElement: Element = new Element(ElementCategory.dir, ElementDirType.operation);
 											operationElement.entity = operation;
 											for (let elementOperationName in OPERATION_DIR) {
-												let elementOperation = ASSET_DIR[elementOperationName];
+												let elementOperation = OPERATION_DIR[elementOperationName];
 												switch (elementOperation.category) {
 													case ElementCategory.dir: {
 														switch (elementOperation.type) {
@@ -95,7 +95,7 @@ export class FileManagerService implements OnModuleInit {
 													} break;
 													case ElementCategory.file: {
 														switch (elementOperation.type) {
-															case ElementFileType.generic: 	console.log("File mancante:", elementKey, ". Invia mail di warning!"); break;
+															case ElementFileType.generic: 	console.log("File in operation mancante:", elementOperationName, ". Invia mail di warning!"); break;
 															//case ElementFileType.link: 		elementOperation.addChild(elementOperationName, new Element(ElementCategory.file, ElementFileType.link)); break;
 															case ElementFileType.base: 		console.log("Tipo file non disponibile in questa sezione:", elementKey, ". Invia mail di warning!"); break;
 														}
