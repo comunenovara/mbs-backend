@@ -20,6 +20,12 @@ export class DossierBusinessService {
 		) {
 			throw new BadRequestException("Dossier is possible to associate only to one of this: Asset, Operation, Relif");
 		}
+
+		// Se asset controlla che il tipo di fasicolo non eista già
+
+		// Se è un elaborato controllare che appartenga a gruppo di elaborati
+		
+
 		let dossier: DossierDto = await this.dossierEntityService.insertDossier(dossierDto);
 		this.dossierFileService.createDossier(dossier);
 		return dossier;

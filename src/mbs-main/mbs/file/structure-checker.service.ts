@@ -47,6 +47,7 @@ export class FileStructureCheckerService {
 							case ElementDirType.relif:		this.result.fileCreati.push(await this.relifFileService.createRelif(struElement.entity)); break;
 							case ElementDirType.operations:	this.result.fileCreati.push(await this.operationFileService.createOperationsFolder(struElement.entity)); break;
 							case ElementDirType.operation:	this.result.fileCreati.push(await this.operationFileService.createOperation(struElement.entity)); break;
+							default: console.log("Non gestito1:", struElementPath);
 						}
 						continue;
 					default:

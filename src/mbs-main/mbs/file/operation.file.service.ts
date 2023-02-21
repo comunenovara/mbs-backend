@@ -78,7 +78,7 @@ export class OperationFileService {
 		console.log("crea operation", operation);
 		let fileContent = `[InternetShortcut]
 		IDList=
-		URL=http://localhost:3000/enzo/operation/detail/${operation.id}/`;
+		URL=http://10.1.20.240/mbs/#/enzo/operation/detail/${operation.id}/`;
 
 		fs.writeFileSync(join(`${this.pathsService.getOperationFolderPath(operation)}`, 'Dettagli.url'), fileContent, {
 			flag: 'w',

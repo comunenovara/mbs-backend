@@ -78,7 +78,7 @@ export class RelifFileService {
 	private createRelifLinkFile(relif: RelifDto) {
 		let fileContent = `[InternetShortcut]
 		IDList=
-		URL=http://localhost:3000/enzo/relif/detail/${relif.id}/`;
+		URL=http://10.1.20.240/mbs/#/enzo/relif/detail/${relif.id}/`;
 
 		let path = join(`${this.pathsService.getRelifFolderPath(relif)}`, 'Dettagli.url');
 		fs.writeFileSync(path, fileContent, {

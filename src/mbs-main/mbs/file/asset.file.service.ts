@@ -72,7 +72,7 @@ export class AssetFileService {
 		console.log(asset);
 		let fileContent = `[InternetShortcut]
 		IDList=
-		URL=http://localhost:3000/enzo/asset/detail/${asset.id}`;
+		URL=http://10.1.20.240/mbs/#/enzo/asset/detail/${asset.id}`;
 
 		let path = join(this.pathsService.getAssetFolderPath(asset), 'Dettagli.url');
 		fs.writeFileSync(path, fileContent, {

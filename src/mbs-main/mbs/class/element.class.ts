@@ -21,6 +21,9 @@ export enum ElementDirType {
 	relifs = 21,
     operation = 4,
 	operations = 31,
+    elaborated = 40,
+    elaborateds = 41,
+    main_elaborated = 42,
 }
 
 export interface IElements {

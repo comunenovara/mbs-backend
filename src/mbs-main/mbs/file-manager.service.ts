@@ -59,7 +59,9 @@ export class FileManagerService implements OnModuleInit {
 												switch (elementRelif.category) {
 													case ElementCategory.dir: {
 														switch (elementRelif.type) {
-															case ElementDirType.dossier:	relifElement.addChilds(await this.getDossiers({ relifIdEquals: relif.id })); break;
+															case ElementDirType.dossier:		relifElement.addChilds(await this.getDossiers({ relifIdEquals: relif.id })); break;
+															case ElementDirType.elaborateds:	relifElement.addChilds(await this.getDossiers({ relifIdEquals: relif.id, "dossier.": '' })); break;
+															default: console.log("Non gestito:", elementKey, element);
 														}
 													} break;
 													case ElementCategory.file: {
@@ -91,6 +93,7 @@ export class FileManagerService implements OnModuleInit {
 													case ElementCategory.dir: {
 														switch (elementOperation.type) {
 															case ElementDirType.dossier:	elementOperation.addChilds(await this.getDossiers({ operationIdEquals: operation.id })); break;
+															default: console.log("Non gestito:", elementKey, element);
 														}
 													} break;
 													case ElementCategory.file: {
@@ -107,6 +110,7 @@ export class FileManagerService implements OnModuleInit {
 									}
 									assetElement.addChild(this.pathsService.getOperationsFolderPath(asset), operationsDirectory);
 								} break;
+								default: console.log("Non gestito:", elementKey, element);
 							}
 						} break;
 						case ElementCategory.file: {
@@ -121,6 +125,9 @@ export class FileManagerService implements OnModuleInit {
 				tree[this.pathsService.getAssetFolderPath(asset)] = assetElement;
 			}
 		}
+
+		console.log(">>>>", await this.getDossiers({ relifIdEquals: 1, "dossier.": '' }))
+
 		return tree;
 	}
 
